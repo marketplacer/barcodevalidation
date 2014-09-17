@@ -2,6 +2,8 @@ require "barcodevalidation/version"
 
 module Barcodevalidation
   def self.valid?(barcode)
+    Integer(barcode)
+
     parts = ('%018d' % barcode).to_s.chars.map(&:to_i)
     checksum = parts.pop
     parts
@@ -17,5 +19,8 @@ module Barcodevalidation
 
     calculated_checksum =  ((calculated_checksum.to_f / 10).ceil * 10) - calculated_checksum
     checksum == calculated_checksum
+
+  rescue ArgumentError
+    false #we only accept numeric barcodes
   end
 end
