@@ -5,6 +5,7 @@ module Barcodevalidation
     Integer(barcode)
 
     parts = ('%018d' % barcode).to_s.chars.map(&:to_i)
+    return false unless [8, 10, 12, 13].include?(barcode.to_s.length)
     checksum = parts.pop
     parts
 

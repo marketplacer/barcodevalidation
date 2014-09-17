@@ -21,6 +21,7 @@ class TestBarcodevalidation < MiniTest::Test
       5420056646861,
       10004336,
       '48cm',
+      123,
       1, #make sure only valid length barcodes are accepted
       22,
       333,
