@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Barcodevalidation::VERSION
   spec.authors       = ["Alan Harper"]
   spec.email         = ["alan@aussiegeek.net"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{Barcode validation library}
+  spec.description   = %q{Simple barcode validator. Just verifies that barcode checksum is valid}
   spec.homepage      = ""
   spec.license       = "MIT"
 
