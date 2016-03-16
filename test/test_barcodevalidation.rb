@@ -9,7 +9,8 @@ class TestBarcodevalidation < MiniTest::Test
     [
       937179004167,
       '937179004167',
-      9312631133233
+      9312631133233,
+      '0753759137885'
     ].each { |barcode| assert Barcodevalidation.valid?(barcode), barcode }
   end
 

@@ -2,12 +2,11 @@ require "barcodevalidation/version"
 
 module Barcodevalidation
   def self.valid?(barcode)
-    Integer(barcode)
+    barcode = barcode.to_s
+    return false unless [8, 10, 12, 13].include?(barcode.length)
 
-    parts = ('%018d' % barcode).to_s.chars.map(&:to_i)
-    return false unless [8, 10, 12, 13].include?(barcode.to_s.length)
+    parts = barcode.rjust(18, '0').chars.map(&:to_i)
     checksum = parts.pop
-    parts
 
     calculated_checksum = 0
     parts.each_with_index do |part, index|
@@ -18,7 +17,7 @@ module Barcodevalidation
       end
     end
 
-    calculated_checksum =  ((calculated_checksum.to_f / 10).ceil * 10) - calculated_checksum
+    calculated_checksum = ((calculated_checksum.to_f / 10).ceil * 10) - calculated_checksum
     checksum == calculated_checksum
 
   rescue ArgumentError
