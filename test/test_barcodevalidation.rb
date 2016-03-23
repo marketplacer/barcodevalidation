@@ -1,10 +1,6 @@
 require 'minitest_helper'
 
 class TestBarcodevalidation < MiniTest::Test
-  def test_that_it_has_a_version_number
-    refute_nil ::Barcodevalidation::VERSION
-  end
-
   def test_valid_barcodes
     [
       937179004167,
@@ -32,7 +28,8 @@ class TestBarcodevalidation < MiniTest::Test
       777777,
       99999999,
       12345678901,
-      123456789012345
+      123456789012345,
+      'BODGYBARCODE'
     ].each { |barcode| refute Barcodevalidation.valid?(barcode), barcode }
   end
 end

@@ -2,8 +2,11 @@ require "barcodevalidation/version"
 
 module Barcodevalidation
   def self.valid?(barcode)
-    barcode = barcode.to_s
-    return false unless [8, 10, 12, 13].include?(barcode.length)
+    barcode = barcode.to_s.strip
+    # only accept numeric codes
+    return false unless barcode =~ /^\d+$/
+    # accept lengths defined at gtin.info
+    return false unless [8, 12, 13, 14].include?(barcode.length)
 
     parts = barcode.rjust(18, '0').chars.map(&:to_i)
     checksum = parts.pop
@@ -19,8 +22,5 @@ module Barcodevalidation
 
     calculated_checksum = ((calculated_checksum.to_f / 10).ceil * 10) - calculated_checksum
     checksum == calculated_checksum
-
-  rescue ArgumentError
-    false #we only accept numeric barcodes
   end
 end
