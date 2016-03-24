@@ -21,6 +21,15 @@ cd barcodevalidation
 bin/setup
 ```
 
+#### Code Quality Checks
+
+Rubocop is used to enforce coding standards.
+
+```
+bin/rubocop
+bin/rubocop --help
+```
+
 
 
 Project Structure
@@ -31,6 +40,7 @@ Project Structure
 * `Gemfile`: Lists RubyGem dependencies, to be installed by Bundler
 * `bin/`: Contains binstubs, useful for development tasks
     * `bundle`: Runs Bundler, in the correct way
+    * `rubocop`: Runs Rubocop (equivalent to `bin/bundle exec rubocop`)
     * `setup`: Sets up the project to be ready for development
 * `config/boot.rb`: Prepares dependencies before loading the library
 
