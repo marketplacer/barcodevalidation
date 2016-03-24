@@ -1,0 +1,6 @@
+# Exclude files from "git archive" using "export-ignore"
+# Git files
+/.gitattributes export-ignore
+
+# Development-only files
+/.editorconfig export-ignore
