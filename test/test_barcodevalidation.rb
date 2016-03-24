@@ -6,7 +6,15 @@ class TestBarcodevalidation < MiniTest::Test
       937179004167,
       '937179004167',
       9312631133233,
-      '0753759137885'
+      '0753759137885',
+
+      # the following are valid barcodes from upcdatabase.org
+      '5000157024671',
+      '4009993145602',
+      '9006288060164',
+      '045893058097',
+      '5023274061190',
+      '075720000715',
     ].each { |barcode| assert Barcodevalidation.valid?(barcode), barcode }
   end
 
