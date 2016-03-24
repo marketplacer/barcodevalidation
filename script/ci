@@ -1,0 +1,5 @@
+docker run --rm=true \
+  -v $PWD:/source \
+  -v ~/.buildbox/be-bundle-cache:/cache \
+  -t marketplacer/ci \
+  /source/script/tests
