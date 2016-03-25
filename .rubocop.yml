@@ -5,6 +5,7 @@ AllCops:
     - 'Gemfile'
     - 'Rakefile'
     - 'bin/bundle'
+    - 'bin/console'
     - 'bin/rake'
     - 'bin/rubocop'
     - 'config/*'

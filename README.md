@@ -21,6 +21,12 @@ cd barcodevalidation
 bin/setup
 ```
 
+Start the interactive development console:
+
+```
+bin/console
+```
+
 Run a build:
 
 ```
@@ -55,6 +61,7 @@ Project Structure
 * `Rakefile`: Defines Rake tasks
 * `bin/`: Contains binstubs, useful for development tasks
     * `bundle`: Runs Bundler, in the correct way
+    * `console`: development console (equiv. to `bin/bundle exec pry`)
     * `rake`: Runs Rake (equivalent to `bin/bundle exec rake`)
     * `rubocop`: Runs Rubocop (equivalent to `bin/bundle exec rubocop`)
     * `setup`: Sets up the project to be ready for development
