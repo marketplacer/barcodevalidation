@@ -81,4 +81,10 @@ RSpec.configure do |config|
   # by passing the same `--seed` value as the one that triggered the
   # failure.
   Kernel.srand config.seed
+
+  # Force RSpec to use color output
+  config.color = true
+
+  # Treat the stdout as a termital specifically on Buildkite
+  config.tty = true if ENV["BUILDKITE"] == "true"
 end
