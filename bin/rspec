@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require File.expand_path("../../config/boot.rb", __FILE__)
+Bundler.setup(:default, :spec)
+load Gem.bin_path("rspec-core", "rspec")

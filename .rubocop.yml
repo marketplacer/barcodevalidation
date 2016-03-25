@@ -7,9 +7,11 @@ AllCops:
     - 'bin/bundle'
     - 'bin/console'
     - 'bin/rake'
+    - 'bin/rspec'
     - 'bin/rubocop'
     - 'config/*'
     - '*.gemspec'
+    - '**/*.rb'
   TargetRubyVersion: 2.2
 
 # Single-quotes aren't quotes, they're apostrophes! D:
