@@ -54,6 +54,8 @@ Marketplacer's internal Buildkite.
 
 Project Structure
 -----------------
+This project's structure is inspired by the Bundler skeleton for a new
+Gem, created using `bundler gem barcodevalidation`.
 
 * `.bundle/config`: Configuration for Bundler
 * `.ruby-version`: Gives rvm, rbenv, chruby etc. a Ruby version to use
@@ -66,6 +68,7 @@ Project Structure
     * `rubocop`: Runs Rubocop (equivalent to `bin/bundle exec rubocop`)
     * `setup`: Sets up the project to be ready for development
 * `config/boot.rb`: Prepares dependencies before loading the library
+* `lib/`: Source files; this directory is added to Ruby's load path
 * `script/ci`: The script run by Buildkite to start a build
 
 

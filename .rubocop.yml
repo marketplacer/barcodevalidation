@@ -9,6 +9,7 @@ AllCops:
     - 'bin/rake'
     - 'bin/rubocop'
     - 'config/*'
+    - '*.gemspec'
   TargetRubyVersion: 2.2
 
 # Single-quotes aren't quotes, they're apostrophes! D:
