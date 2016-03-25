@@ -3,4 +3,5 @@
 /.gitattributes export-ignore
 
 # Development-only files
+/CODE_OF_CONDUCT.md export-ignore
 /.editorconfig export-ignore
