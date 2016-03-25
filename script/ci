@@ -1,0 +1,5 @@
+#!/bin/bash
+docker run --rm \
+  -v "$PWD":/app \
+  -t marketplacer/ci \
+  bash -c "cd /app && bin/setup && bin/rake"

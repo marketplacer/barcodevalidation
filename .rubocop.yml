@@ -3,7 +3,9 @@ AllCops:
   DisplayStyleGuide: true
   Include:
     - 'Gemfile'
+    - 'Rakefile'
     - 'bin/bundle'
+    - 'bin/rake'
     - 'bin/rubocop'
     - 'config/*'
   TargetRubyVersion: 2.2

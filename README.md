@@ -21,6 +21,12 @@ cd barcodevalidation
 bin/setup
 ```
 
+Run a build:
+
+```
+bin/rake
+```
+
 #### Code Quality Checks
 
 Rubocop is used to enforce coding standards.
@@ -32,17 +38,28 @@ bin/rubocop --help
 
 
 
+Continuous Integration
+----------------------
+
+Code is automatically tested with each push, on both Travis CI and
+Marketplacer's internal Buildkite.
+
+
+
 Project Structure
 -----------------
 
 * `.bundle/config`: Configuration for Bundler
 * `.ruby-version`: Gives rvm, rbenv, chruby etc. a Ruby version to use
 * `Gemfile`: Lists RubyGem dependencies, to be installed by Bundler
+* `Rakefile`: Defines Rake tasks
 * `bin/`: Contains binstubs, useful for development tasks
     * `bundle`: Runs Bundler, in the correct way
+    * `rake`: Runs Rake (equivalent to `bin/bundle exec rake`)
     * `rubocop`: Runs Rubocop (equivalent to `bin/bundle exec rubocop`)
     * `setup`: Sets up the project to be ready for development
 * `config/boot.rb`: Prepares dependencies before loading the library
+* `script/ci`: The script run by Buildkite to start a build
 
 
 

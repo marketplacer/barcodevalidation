@@ -9,5 +9,6 @@
 /CODE_OF_CONDUCT.md export-ignore
 /.editorconfig export-ignore
 /Gemfile export-ignore
+/Rakefile export-ignore
 /.rubocop.yml export-ignore
 /.ruby-version export-ignore
