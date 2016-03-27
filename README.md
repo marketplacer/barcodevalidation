@@ -1,6 +1,11 @@
 barcodevalidation
 =================
 
+[![Build Status][travis-badge]][travis]
+
+[travis]: <https://travis-ci.org/marketplacer/barcodevalidation>
+[travis-badge]: <https://travis-ci.org/marketplacer/barcodevalidation.svg?branch=master>
+
 A RubyGem to parse and validate barcodes.
 
 
