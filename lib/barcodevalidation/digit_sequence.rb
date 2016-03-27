@@ -26,7 +26,7 @@ module BarcodeValidation
     SEQUENCE_METHODS.each do |method_name|
       define_method method_name do |*args|
         super(*args).tap do |result|
-          return self.class.new(result) if result.is_a? Enumerable
+          return DigitSequence.new(result) if result.is_a? Enumerable
         end
       end
     end
