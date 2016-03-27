@@ -2,9 +2,9 @@ require "barcodevalidation/mixin/has_check_digit"
 require "barcodevalidation/mixin/value_object"
 require "barcodevalidation/digit"
 require "barcodevalidation/digit_sequence"
-require "barcodevalidation/barcode"
+require "barcodevalidation/gtin"
 
-RSpec.describe BarcodeValidation::Barcode::CheckDigit do
+RSpec.describe BarcodeValidation::GTIN::CheckDigit do
   context "when initialized with a single digit" do
     subject(:digit) { described_class.new(input) }
     let(:input) { 1 }

@@ -2,10 +2,10 @@ require "barcodevalidation/mixin/has_check_digit"
 require "barcodevalidation/mixin/value_object"
 require "barcodevalidation/digit"
 require "barcodevalidation/digit_sequence"
-require "barcodevalidation/barcode"
+require "barcodevalidation/gtin"
 
-RSpec.describe BarcodeValidation::Barcode do
-  subject(:barcode) { described_class.new(input) }
+RSpec.describe BarcodeValidation::GTIN do
+  subject(:gtin) { described_class.new(input) }
 
   context "with a valid UPC" do
     let(:input) { 123_456_789_012 }

@@ -1,7 +1,7 @@
 require "forwardable"
 
 module BarcodeValidation
-  class Barcode < BarcodeValidation::DigitSequence
+  class GTIN < BarcodeValidation::DigitSequence
     extend Forwardable
     include Mixin::HasCheckDigit
 

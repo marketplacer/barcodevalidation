@@ -5,7 +5,7 @@ module BarcodeValidation
       MODULUS = 10
 
       def check_digit
-        Barcode::CheckDigit.new(last, expected: expected_check_digit)
+        GTIN::CheckDigit.new(last, expected: expected_check_digit)
       end
 
       private
