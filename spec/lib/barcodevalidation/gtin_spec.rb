@@ -17,6 +17,20 @@ RSpec.describe BarcodeValidation::GTIN do
     it { is_expected.to_not be_valid }
   end
 
+  context "with a sequence of digits of unknown length" do
+    let(:input) { 123_456_789_012_345_678 }
+    it { is_expected.to_not be_valid }
+  end
+
+  context "with a non-numeric input" do
+    let(:input) { "abcdef" }
+    it "fails" do
+      expect { gtin }.to raise_error \
+        ArgumentError,
+        %(invalid value for BarcodeValidation::Digit(): "a")
+    end
+  end
+
   describe "sequence methods" do
     let(:input) { 123 }
     subject(:sequence) { gtin.reverse }
