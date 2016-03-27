@@ -1,5 +1,12 @@
+require "forwardable"
+
 module BarcodeValidation
-  module Barcode
+  class Barcode < BarcodeValidation::DigitSequence
+    extend Forwardable
+    include Mixin::HasCheckDigit
+
+    delegate valid?: :check_digit
+
     class CheckDigit < Digit
       include Mixin::ValueObject
 

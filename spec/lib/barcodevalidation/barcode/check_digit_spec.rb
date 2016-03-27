@@ -1,5 +1,7 @@
+require "barcodevalidation/mixin/has_check_digit"
 require "barcodevalidation/mixin/value_object"
 require "barcodevalidation/digit"
+require "barcodevalidation/digit_sequence"
 require "barcodevalidation/barcode"
 
 RSpec.describe BarcodeValidation::Barcode::CheckDigit do
