@@ -72,7 +72,8 @@ RSpec.describe BarcodeValidation::DigitSequence do
       let(:other) { [1, "a"] }
       it "fails" do
         expect { result }.to raise_error \
-          ArgumentError, %(invalid value for Integer(): "a")
+          ArgumentError,
+          %(invalid value for BarcodeValidation::Digit(): "a")
       end
     end
 
