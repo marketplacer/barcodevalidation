@@ -5,7 +5,11 @@ module BarcodeValidation
     extend Forwardable
     include Mixin::HasCheckDigit
 
-    delegate valid?: :check_digit
+    VALID_LENGTHS = [8, 12, 13, 14].freeze
+
+    def valid?
+      VALID_LENGTHS.include?(length) && check_digit.valid?
+    end
 
     class CheckDigit < Digit
       include Mixin::ValueObject
