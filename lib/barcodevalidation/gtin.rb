@@ -10,13 +10,13 @@ module BarcodeValidation
     class CheckDigit < Digit
       include Mixin::ValueObject
 
-      alias actual dup
-      attr_reader :expected
+      attr_reader :actual, :expected
 
       def initialize(actual, expected: nil)
         expected = actual if expected.nil?
         @expected = Digit.new(expected)
-        super(Digit.new(actual))
+        @actual = Digit.new(actual)
+        super(@actual)
       end
 
       def valid?

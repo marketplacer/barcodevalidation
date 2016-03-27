@@ -15,8 +15,9 @@ RSpec.describe BarcodeValidation::GTIN::CheckDigit do
     its(:to_s) { is_expected.to eq "1" }
     its(:actual) { is_expected.to eq 1 }
     its(:expected) { is_expected.to eq 1 }
-    its(:inspect) { is_expected.to eq "#<#{described_class}(1)>" }
     its(:dup) { is_expected.to be subject }
+    its(:inspect) { is_expected.to eq "#<#{described_class}(1)>" }
+    its("actual.inspect") { is_expected.to eq digit.expected.inspect }
   end
 
   context "when initialized with an actual and expected digit" do
