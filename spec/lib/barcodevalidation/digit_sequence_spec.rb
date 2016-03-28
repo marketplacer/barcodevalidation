@@ -1,4 +1,5 @@
 require "barcodevalidation/mixin/value_object"
+require "barcodevalidation/error/argument_error_class"
 require "barcodevalidation/digit"
 require "barcodevalidation/digit_sequence"
 
@@ -80,8 +81,9 @@ RSpec.describe BarcodeValidation::DigitSequence do
     context "with an array containing out of range digits" do
       let(:other) { [1, 19] }
       it "fails" do
-        expect { result }.to raise_error RangeError,
-                                         "digits must be 0-9"
+        expect { result }.to raise_error \
+          BarcodeValidation::Digit::ArgumentError,
+          "invalid value for BarcodeValidation::Digit(): 19"
       end
     end
   end
@@ -149,8 +151,8 @@ RSpec.describe BarcodeValidation::DigitSequence do
     let(:input) { nil }
     it "fails" do
       expect { sequence }.to raise_error(
-        BarcodeValidation::DigitSequence::TypeError,
-        "unknown sequence type NilClass: nil",
+        BarcodeValidation::DigitSequence::ArgumentError,
+        "invalid value for BarcodeValidation::DigitSequence(): nil",
       )
     end
   end

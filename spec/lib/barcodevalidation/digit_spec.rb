@@ -58,7 +58,9 @@ RSpec.describe BarcodeValidation::Digit do
   context "with an out-of-range value" do
     let(:input) { 10 }
     it "fails with an error message" do
-      expect { digit }.to raise_error RangeError, "digits must be 0-9"
+      expect { digit }.to raise_error \
+        BarcodeValidation::Digit::ArgumentError,
+        "invalid value for BarcodeValidation::Digit(): 10"
     end
   end
 end

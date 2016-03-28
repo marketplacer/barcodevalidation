@@ -5,16 +5,13 @@ module BarcodeValidation
     include Mixin::ValueObject
 
     def initialize(input)
-      value = cast(input)
-      raise RangeError, "digits must be 0-9" unless (0..9).cover? value
+      value = Integer(input)
+      raise ::ArgumentError unless (0..9).cover? value
       super(value)
+    rescue ::ArgumentError
+      raise Digit::ArgumentError, input
     end
 
-    def cast(input)
-      Integer(input)
-    rescue ArgumentError => e
-      e.message.gsub!("Integer", "BarcodeValidation::Digit")
-      raise e
-    end
+    ArgumentError = Error::ArgumentErrorClass.new(self)
   end
 end

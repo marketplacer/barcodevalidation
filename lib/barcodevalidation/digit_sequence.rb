@@ -9,7 +9,7 @@ module BarcodeValidation
 
     def initialize(values)
       values = cast(values)
-      raise TypeError, values unless values.respond_to? :map
+      raise ArgumentError, values unless values.respond_to? :map
       super(values.map { |value| BarcodeValidation::Digit.new(value) })
     end
 
@@ -39,10 +39,6 @@ module BarcodeValidation
       input
     end
 
-    class TypeError < ::TypeError
-      def initialize(input)
-        super "unknown sequence type #{input.class}: #{input.inspect}"
-      end
-    end
+    ArgumentError = Error::ArgumentErrorClass.new(DigitSequence)
   end
 end

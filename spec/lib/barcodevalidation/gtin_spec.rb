@@ -26,7 +26,7 @@ RSpec.describe BarcodeValidation::GTIN do
     let(:input) { "abcdef" }
     it "fails" do
       expect { gtin }.to raise_error \
-        ArgumentError,
+        BarcodeValidation::Digit::ArgumentError,
         %(invalid value for BarcodeValidation::Digit(): "a")
     end
   end
