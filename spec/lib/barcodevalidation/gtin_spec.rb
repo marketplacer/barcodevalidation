@@ -24,11 +24,7 @@ RSpec.describe BarcodeValidation::GTIN do
 
   context "with a non-numeric input" do
     let(:input) { "abcdef" }
-    it "fails" do
-      expect { gtin }.to raise_error \
-        BarcodeValidation::Digit::ArgumentError,
-        %(invalid value for BarcodeValidation::Digit(): "a")
-    end
+    it { is_expected.to_not be_valid }
   end
 
   describe "sequence methods" do

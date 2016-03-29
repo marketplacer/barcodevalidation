@@ -7,6 +7,12 @@ module BarcodeValidation
 
     VALID_LENGTHS = [8, 12, 13, 14].freeze
 
+    def self.new(input)
+      super
+    rescue BarcodeValidation::Error => e
+      return InvalidGTIN.new(input, error: e)
+    end
+
     def valid?
       VALID_LENGTHS.include?(length) && check_digit.valid?
     end
