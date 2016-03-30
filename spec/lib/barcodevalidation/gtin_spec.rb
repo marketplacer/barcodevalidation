@@ -12,6 +12,11 @@ RSpec.describe BarcodeValidation::GTIN do
     it { is_expected.to be_valid }
   end
 
+  context "with a valid UPC where the check digit is 0" do
+    let(:input) { 123_456_789_050 }
+    it { is_expected.to be_valid }
+  end
+
   context "with a UPC with an invalid check digit" do
     let(:input) { 123_456_789_011 }
     it { is_expected.to_not be_valid }

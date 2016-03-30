@@ -11,7 +11,7 @@ module BarcodeValidation
       private
 
       def expected_check_digit
-        MODULUS - (weighted_checkable_digit_sum % MODULUS)
+        (MODULUS - weighted_checkable_digit_sum) % MODULUS
       end
 
       def weighted_checkable_digit_sum
