@@ -7,6 +7,40 @@ RSpec.describe BarcodeValidation::DigitSequence do
   subject(:sequence) { described_class.new(input) }
   let(:input) { 123_456 }
 
+  describe "#initialize" do
+    it "caches equivalent instances" do
+      first = described_class.new(123_456)
+      second = described_class.new("123456")
+      third = described_class.new([1, 2, 3, 4, 5, 6])
+      expect(first).to be second
+      expect(second).to be third
+      expect(first).to be third
+    end
+
+    context "after creating many instances" do
+      before { described_class.new(input) }
+      let(:inputs) do
+        [
+          "123", "456", "789",
+          123, 456, 789,
+          [1, 2, 3], [4, 5, 6], [7, 8, 9],
+          described_class.new(123), described_class.new(456)
+        ]
+      end
+
+      subject(:every_instance) do
+        cache = described_class.instance_variable_get(:@__new_cache)
+        (cache || {}).values
+      end
+
+      specify "none of them are equal to any other" do
+        every_instance.to_a.permutation(2) do |a, b|
+          expect(a).to_not eq b
+        end
+      end
+    end
+  end
+
   context "in comparison to another sequence" do
     let(:other) { described_class.new(other_input) }
 
