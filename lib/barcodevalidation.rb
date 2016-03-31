@@ -7,13 +7,23 @@ require "barcodevalidation/invalid_gtin"
 require "barcodevalidation/version"
 
 module BarcodeValidation
-  def self.scan(input)
-    GTIN.new(input)
-  end
+  class << self
+    def scan(input)
+      GTIN.new(sanitize(input))
+    end
 
-  def self.scan!(input)
-    scan(input).tap do |result|
-      raise InvalidGTINError, input unless result.valid?
+    def scan!(input)
+      scan(input).tap do |result|
+        raise InvalidGTINError, input unless result.valid?
+      end
+    end
+
+    private
+
+    # Strips punctuation
+    def sanitize(input)
+      return input.gsub(/(\s|[-_])/, "") if input.respond_to? :gsub
+      input
     end
   end
 

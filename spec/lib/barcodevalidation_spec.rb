@@ -12,6 +12,8 @@ RSpec.describe BarcodeValidation do
     "937179004167",
     9_312_631_133_233,
     "0753759137885",
+    "0-753759-137885",
+    "0 753759 137885",
   ].freeze
 
   INVALID_INPUTS = [
