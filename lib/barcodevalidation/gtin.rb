@@ -17,7 +17,7 @@ module BarcodeValidation
       VALID_LENGTHS.include?(length) && check_digit.valid?
     end
 
-    class CheckDigit < Digit
+    class CheckDigit < DelegateClass(Digit)
       include Mixin::ValueObject
 
       attr_reader :actual, :expected

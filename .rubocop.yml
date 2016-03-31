@@ -74,7 +74,7 @@ Metrics/BlockNesting:
   Max: 2 # Rubocop default: 3
 
 Metrics/ClassLength:
-  Max: 30 # Rubocop default: 100
+  Max: 32 # Rubocop default: 100
 
 Metrics/ModuleLength:
   Max: 30 # Rubocop default: 100

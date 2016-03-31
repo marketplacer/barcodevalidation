@@ -4,10 +4,19 @@ module BarcodeValidation
   module Mixin
     module ValueObject
       def self.included(mod)
-        mod.module_exec { include Adamantium }
+        mod.extend ClassMethods
+        mod.include Adamantium
+      end
 
-        def mod.new(*args)
-          (@__new_cache ||= {})[args] ||= super
+      module ClassMethods
+        # Memoizes return values based on the inputs
+        def new(*args)
+          (@__new_cache ||= {})[memoization_key(*args)] ||= super
+        end
+
+        # Customise the memoisation logic in classes which include this
+        def memoization_key(*args)
+          args
         end
       end
 

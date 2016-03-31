@@ -1,9 +1,40 @@
+require "barcodevalidation/error/argument_error_class"
 require "barcodevalidation/mixin/value_object"
 require "barcodevalidation/digit"
 
 RSpec.describe BarcodeValidation::Digit do
   subject(:digit) { described_class.new(input) }
   let(:input) { 9 }
+
+  describe "#initialize" do
+    it "caches equivalent instances" do
+      expect(described_class.new(1)).to be described_class.new("1")
+    end
+
+    context "after creating many instances" do
+      before { inputs.each { |input| described_class.new(input) } }
+      let(:inputs) do
+        [
+          %w(1 2 3 4 5 6 7 8 9 0),
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 0,
+          described_class.new(1), described_class.new(2)
+        ].flatten
+      end
+
+      subject(:every_instance) do
+        cache = described_class.instance_variable_get(:@__new_cache)
+        (cache || {}).values
+      end
+
+      its(:count) { is_expected.to be <= 10 }
+
+      specify "none of them are equal to any other" do
+        every_instance.to_a.permutation(2) do |a, b|
+          expect(a).to_not eq b
+        end
+      end
+    end
+  end
 
   context "in comparison to another digit" do
     let(:other_digit) { described_class.new(other_input) }
@@ -50,8 +81,9 @@ RSpec.describe BarcodeValidation::Digit do
   context "with a nil value" do
     let(:input) { nil }
     it "fails with an error message" do
-      expect { digit }.to raise_error TypeError,
-                                      "can't convert nil into Integer"
+      expect { digit }.to raise_error \
+        BarcodeValidation::Digit::ArgumentError,
+        "invalid value for BarcodeValidation::Digit(): nil"
     end
   end
 
