@@ -34,7 +34,15 @@ RSpec.describe BarcodeValidation do
     123_456_789_012_345,
     "BODGYBARCODE",
     "",
+    # make sure it doesn't choke on junk
     nil,
+    true,
+    false,
+    -> { foobar },
+    Class.new,
+    Object.new,
+    0...10,
+    /abcd/,
   ].freeze
 
   describe ".scan" do
