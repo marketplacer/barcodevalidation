@@ -13,6 +13,51 @@ A RubyGem to parse and validate barcodes.
 
 
 
+Installation
+------------
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem "barcodevalidation"
+```
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install barcodevalidation
+
+
+
+Usage
+-----
+
+The main API is `BarcodeValidation.scan`. It accepts a single argument,
+and it's pretty flexible about what you give it.
+
+```ruby
+gtin = BarcodeValidation.scan("937179-004167")
+# => #<BarcodeValidation::GTIN(937179004167)>
+gtin.to_s        # => "937179004167"
+gtin.valid?      # => true
+gtin.check_digit # => #<BarcodeValidation::GTIN::CheckDigit(7)>
+gtin.first(6)    # => #<BarcodeValidation::DigitSequence(937179)>
+gtin.slice(0..5) # => #<BarcodeValidation::DigitSequence(937179)>
+
+bad = BarcodeValidation.scan(937_179_004_162)
+# => #<BarcodeValidation::GTIN(937179004162)>
+bad.valid?               # => false
+bad.check_digit          # => #<BarcodeValidation::GTIN::CheckDigit(2) invalid: expected 7>
+bad.check_digit.valid?   # => false
+bad.check_digit.actual   # => #<BarcodeValidation::Digit(2)>
+bad.check_digit.expected # => #<BarcodeValidation::Digit(7)>
+```
+
+
+
 Development
 -----------
 
