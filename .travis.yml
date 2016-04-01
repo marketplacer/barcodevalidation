@@ -5,4 +5,5 @@ rvm:
   - 2.3.0
 script:
   - gem install bundler
-  - bundle exec rake test
+  - bin/setup
+  - bin/rake

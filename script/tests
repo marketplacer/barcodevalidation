@@ -1,5 +1,0 @@
-#!/bin/bash
-
-cd /source
-bundle check --path /cache/bundler || bundle install --path /cache/bundler -j 8
-bundle exec rake test

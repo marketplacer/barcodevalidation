@@ -1,3 +1,7 @@
+# Third-party dependencies, installed separately from Git
+/vendor/
+
+# Default Ruby Git ignore list
 *.gem
 *.rbc
 .bundle

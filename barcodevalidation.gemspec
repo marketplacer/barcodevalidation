@@ -1,20 +1,27 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'barcodevalidation/version'
+require "barcodevalidation/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "barcodevalidation"
-  spec.version       = Barcodevalidation::VERSION
+  spec.version       = BarcodeValidation::VERSION
   spec.authors       = ["Marketplacer"]
   spec.email         = ["it@marketplacer.com"]
-  spec.summary       = %q{Barcode validation library}
-  spec.description   = %q{Simple barcode validator. Just verifies that barcode checksum is valid}
-  spec.homepage      = ""
+
+  spec.summary       = "Parses and validates barcodes"
+  spec.description   = "A RubyGem to parse and validate barcodes"
+  spec.homepage      = "https://github.com/marketplacer/#{spec.name}"
   spec.license       = "MIT"
 
-  spec.files         = `git ls-files -z`.split("\x0")
-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.files         = %w(LICENSE.md README.md barcodevalidation.gemspec
+                          config/*.rb lib/**/*.rb)
+                       .flat_map { |pattern| Dir.glob(pattern) }
+                       .reject { |f| File.directory?(f) }
+  spec.bindir        = "exe"
+  spec.executables   = spec.files
+                           .grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
+
+  spec.add_runtime_dependency "adamantium"
 end

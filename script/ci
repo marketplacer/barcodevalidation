@@ -1,5 +1,5 @@
-docker run --rm=true \
-  -v $PWD:/source \
-  -v ~/.buildbox/be-bundle-cache:/cache \
+#!/bin/bash
+docker run --rm \
+  -v "$PWD":/app \
   -t marketplacer/ci \
-  /source/script/tests
+  bash -c "cd /app && bin/setup && bin/rake"

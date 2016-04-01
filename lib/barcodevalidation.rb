@@ -1,26 +1,37 @@
+require "barcodevalidation/mixin"
+require "barcodevalidation/error"
+require "barcodevalidation/digit"
+require "barcodevalidation/digit_sequence"
+require "barcodevalidation/gtin"
+require "barcodevalidation/invalid_gtin"
 require "barcodevalidation/version"
 
-module Barcodevalidation
-  def self.valid?(barcode)
-    barcode = barcode.to_s.strip
-    # only accept numeric codes
-    return false unless barcode =~ /^\d+$/
-    # accept lengths defined at gtin.info
-    return false unless [8, 12, 13, 14].include?(barcode.length)
+module BarcodeValidation
+  class << self
+    def scan(input)
+      GTIN.new(sanitize(input))
+    end
 
-    parts = barcode.rjust(18, '0').chars.map(&:to_i)
-    checksum = parts.pop
-
-    calculated_checksum = 0
-    parts.each_with_index do |part, index|
-      if index % 2 == 0
-        calculated_checksum += (part * 3)
-      else
-        calculated_checksum += part
+    def scan!(input)
+      scan(input).tap do |result|
+        raise InvalidGTINError, input unless result.valid?
       end
     end
 
-    calculated_checksum = ((calculated_checksum.to_f / 10).ceil * 10) - calculated_checksum
-    checksum == calculated_checksum
+    private
+
+    # Strips punctuation
+    def sanitize(input)
+      return input.gsub(/(\s|[-_])/, "") if input.respond_to? :gsub
+      input
+    end
+  end
+
+  class InvalidGTINError < ::ArgumentError
+    include Error
+
+    def initialize(input)
+      super "Invalid GTIN #{input.inspect}"
+    end
   end
 end

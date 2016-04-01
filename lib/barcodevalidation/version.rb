@@ -1,3 +1,3 @@
-module Barcodevalidation
-  VERSION = "1.0.1"
+module BarcodeValidation
+  VERSION = "2.0.0".freeze
 end

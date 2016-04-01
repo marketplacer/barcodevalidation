@@ -1,0 +1,95 @@
+AllCops:
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  Include:
+    - 'Gemfile'
+    - 'Rakefile'
+    - 'bin/bundle'
+    - 'bin/console'
+    - 'bin/rake'
+    - 'bin/rspec'
+    - 'bin/rubocop'
+    - 'config/*'
+    - '*.gemspec'
+    - '**/*.rb'
+  TargetRubyVersion: 2.2
+
+# Single-quotes aren't quotes, they're apostrophes! D:
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+# Disabled due to noise when re-opening modules
+Style/Documentation:
+  Enabled: false
+
+# Enable some cops disabled by default in the standard Rubocop config
+# These are all the cops that are disabled normally.
+
+# Suggests the usage of an auto resource cleanup version of a method
+# (if available).
+Style/AutoResourceCleanup:
+  Enabled: true
+
+# Preferred collection methods
+Style/CollectionMethods:
+  Enabled: true
+
+# Avoid if/case expressions with empty else branches
+Style/MissingElse:
+  Enabled: true
+
+# Avoid chaining a method call on a do...end block
+Style/MethodCalledOnDoEndBlock:
+  Enabled: true
+
+# Do not assign mutable objects to constants
+Style/MutableConstant:
+  Enabled: true
+
+# Don't use option hashes when you can use keyword arguments
+Style/OptionHash:
+  Enabled: true
+
+# Prefer `Object#__send__` or `Object#public_send` to `send`, as
+# `send` may overlap with existing methods.
+Style/Send:
+  Enabled: true
+
+# Use %i or %I for arrays of symbols
+Style/SymbolArray:
+  Enabled: true
+
+Style/TrailingCommaInLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: comma
+
+# Tighten up the metrics
+
+Metrics/AbcSize:
+  Max: 6 # Rubocop default: 15
+
+Metrics/BlockNesting:
+  Max: 2 # Rubocop default: 3
+
+Metrics/ClassLength:
+  Max: 32 # Rubocop default: 100
+
+Metrics/ModuleLength:
+  Max: 30 # Rubocop default: 100
+
+Metrics/CyclomaticComplexity:
+  Max: 5 # Rubocop default: 6
+
+Metrics/LineLength:
+  Max: 72 # Rubocop default: 80
+
+Metrics/MethodLength:
+  Max: 5 # Rubocop default: 10
+
+Metrics/ParameterLists:
+  Max: 2 # Rubocop default: 5
+
+Metrics/PerceivedComplexity:
+  Max: 3 # Rubocop default: 7

@@ -1,9 +1,15 @@
 require "bundler/gem_tasks"
-require "rake/testtask"
+require "rspec/core/rake_task"
+require "rubocop/rake_task"
 
-Rake::TestTask.new(:test) do |t|
-  t.libs << "test"
+RSpec::Core::RakeTask.new :spec
+
+namespace :quality do
+  RuboCop::RakeTask.new :rubocop
 end
 
-task :default => :test
+desc "Run all code quality tools"
+task quality: %i(quality:rubocop)
 
+desc "Run a full build"
+task default: %i(spec quality)
