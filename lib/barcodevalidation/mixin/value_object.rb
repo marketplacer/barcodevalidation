@@ -5,18 +5,12 @@ module BarcodeValidation
     module ValueObject
       def self.included(mod)
         mod.extend ClassMethods
-        mod.include Adamantium
       end
 
       module ClassMethods
         # Memoizes return values based on the inputs
         def new(*args)
-          (@__new_cache ||= {})[memoization_key(*args)] ||= super
-        end
-
-        # Customise the memoisation logic in classes which include this
-        def memoization_key(*args)
-          args
+          (@__new_cache ||= {})[args] ||= super
         end
       end
 

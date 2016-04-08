@@ -17,12 +17,12 @@ module BarcodeValidation
       def weighted_checkable_digit_sum
         checkable_digits
           .zip([3, 1].cycle)
-          .map { |l, r| l * r }
+          .map { |digit, factor| digit * factor }
           .reduce(&:+)
       end
 
       def checkable_digits
-        take(length - 1).reverse
+        take(length - 1).reverse.map(&:to_i)
       end
     end
   end

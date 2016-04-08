@@ -90,3 +90,8 @@ RSpec.configure do |config|
   # Treat the stdout as a termital specifically on Buildkite
   config.tty = true if ENV["BUILDKITE"] == "true"
 end
+
+# Require everything under spec/support
+Dir[File.expand_path("../support/**/*.rb", __FILE__)].each do |file|
+  require file
+end

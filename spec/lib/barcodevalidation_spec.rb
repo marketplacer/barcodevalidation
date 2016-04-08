@@ -1,4 +1,5 @@
 require "barcodevalidation"
+require "benchmark"
 
 RSpec.describe BarcodeValidation do
   it { is_expected.to be_an_instance_of Module }
@@ -72,6 +73,33 @@ RSpec.describe BarcodeValidation do
             expect { scan! }.to raise_error BarcodeValidation::Error
           end
         end
+      end
+    end
+
+    describe "performance" do
+      let!(:valid_inputs) { fixture_data("barcodes/valid.txt") }
+      let!(:invalid_inputs) { fixture_data("barcodes/invalid.txt") }
+
+      it "accepts all valid barcodes" do
+        valid_inputs.each do |valid_input|
+          result = described_class.scan(valid_input)
+          expect(result).to be_valid
+        end
+      end
+
+      it "rejects all invalid barcodes" do
+        invalid_inputs.each do |invalid_input|
+          result = described_class.scan(invalid_input)
+          expect(result).to_not be_valid
+        end
+      end
+
+      it "decides on a valid input quickly" do
+        realtime = Benchmark.realtime do
+          valid_inputs.each { |i| described_class.scan(i).valid? }
+        end
+
+        expect(realtime / valid_inputs.count).to be < 0.000_05 # 50us
       end
     end
   end
