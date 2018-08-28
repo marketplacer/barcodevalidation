@@ -1,6 +1,7 @@
 require "barcodevalidation"
 require "benchmark"
 
+# rubocop:disable Metrics/BlockLength
 RSpec.describe BarcodeValidation do
   it { is_expected.to be_an_instance_of Module }
 
@@ -104,3 +105,4 @@ RSpec.describe BarcodeValidation do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

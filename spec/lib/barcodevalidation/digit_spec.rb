@@ -2,6 +2,7 @@ require "barcodevalidation/error/argument_error_class"
 require "barcodevalidation/mixin/value_object"
 require "barcodevalidation/digit"
 
+# rubocop:disable Metrics/BlockLength
 RSpec.describe BarcodeValidation::Digit do
   subject(:digit) { described_class.new(input) }
   let(:input) { 9 }
@@ -15,7 +16,7 @@ RSpec.describe BarcodeValidation::Digit do
       before { inputs.each { |input| described_class.new(input) } }
       let(:inputs) do
         [
-          %w(1 2 3 4 5 6 7 8 9 0),
+          %w[1 2 3 4 5 6 7 8 9 0],
           1, 2, 3, 4, 5, 6, 7, 8, 9, 0,
           described_class.new(1), described_class.new(2)
         ].flatten
@@ -90,3 +91,4 @@ RSpec.describe BarcodeValidation::Digit do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

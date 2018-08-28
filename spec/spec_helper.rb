@@ -92,6 +92,6 @@ RSpec.configure do |config|
 end
 
 # Require everything under spec/support
-Dir[File.expand_path("../support/**/*.rb", __FILE__)].each do |file|
+Dir[File.expand_path("support/**/*.rb", __dir__)].each do |file|
   require file
 end

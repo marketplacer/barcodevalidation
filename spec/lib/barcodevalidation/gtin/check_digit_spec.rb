@@ -4,6 +4,7 @@ require "barcodevalidation/digit"
 require "barcodevalidation/digit_sequence"
 require "barcodevalidation/gtin"
 
+# rubocop:disable Metrics/BlockLength
 RSpec.describe BarcodeValidation::GTIN::CheckDigit do
   context "when initialized with a single digit" do
     subject(:digit) { described_class.new(input) }
@@ -40,3 +41,4 @@ RSpec.describe BarcodeValidation::GTIN::CheckDigit do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

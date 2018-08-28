@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require File.expand_path("../../config/boot.rb", __FILE__)
+require File.expand_path("../config/boot.rb", __dir__)
 Bundler.require(:default, :console)
 require "barcodevalidation"
 Pry::CLI.parse_options

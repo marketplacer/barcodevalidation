@@ -9,7 +9,7 @@ namespace :quality do
 end
 
 desc "Run all code quality tools"
-task quality: %i(quality:rubocop)
+task quality: %i[quality:rubocop]
 
 desc "Run a full build"
-task default: %i(spec quality)
+task default: %i[spec quality]

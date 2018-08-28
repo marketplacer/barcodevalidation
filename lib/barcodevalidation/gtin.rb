@@ -10,7 +10,7 @@ module BarcodeValidation
     def self.new(input)
       super
     rescue BarcodeValidation::Error => e
-      return InvalidGTIN.new(input, error: e)
+      InvalidGTIN.new(input, error: e)
     end
 
     def valid?
