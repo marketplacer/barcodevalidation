@@ -4,6 +4,7 @@ require "barcodevalidation/digit"
 require "barcodevalidation/digit_sequence"
 require "barcodevalidation/gtin"
 
+# rubocop:disable Metrics/BlockLength
 RSpec.describe BarcodeValidation::GTIN do
   subject(:gtin) { described_class.new(input) }
 
@@ -38,3 +39,4 @@ RSpec.describe BarcodeValidation::GTIN do
     it { is_expected.to_not be_a described_class }
   end
 end
+# rubocop:enable Metrics/BlockLength

@@ -4,18 +4,18 @@ source "https://rubygems.org"
 gemspec
 
 # The interactive console at bin/console, used during development
-gem "pry", group: %i(console spec)
+gem "pry", group: %i[console spec]
 
 group :rake do
   # Task runner
-  gem "rake", "~> 11.1"
+  gem "rake", "~> 12"
 
   # Static analysis for Ruby
-  gem "rubocop", "~> 0.38", group: :rubocop
+  gem "rubocop", "~> 0.58", group: :rubocop
 
   group :spec do
     # Spec runner, DSL, matchers, and mocking framework all in one
-    gem "rspec", "~> 3.4"
+    gem "rspec", "~> 3"
 
     # RSpec its syntax
     gem "rspec-its", require: "rspec/its"

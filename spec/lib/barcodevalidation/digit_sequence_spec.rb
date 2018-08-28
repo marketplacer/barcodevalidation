@@ -3,6 +3,7 @@ require "barcodevalidation/error/argument_error_class"
 require "barcodevalidation/digit"
 require "barcodevalidation/digit_sequence"
 
+# rubocop:disable Metrics/BlockLength
 RSpec.describe BarcodeValidation::DigitSequence do
   subject(:sequence) { described_class.new(input) }
   let(:input) { 123_456 }
@@ -89,7 +90,7 @@ RSpec.describe BarcodeValidation::DigitSequence do
   {
     "String including a leading zero" => "0123",
     "array of Fixnums" => [0, 1, 2, 3],
-    "array of String digits" => %w(0 1 2 3),
+    "array of String digits" => %w[0 1 2 3],
   }.each do |type, value|
     context "with the #{type} of '#{value}'" do
       let(:input) { value }
@@ -111,3 +112,4 @@ RSpec.describe BarcodeValidation::DigitSequence do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

@@ -22,8 +22,8 @@ module BarcodeValidation
         "#<#{description}>"
       end
 
-      def pretty_print(pp)
-        pp.text inspect
+      def pretty_print(value)
+        value.text inspect
       end
 
       private

@@ -1,5 +1,4 @@
-# coding: utf-8
-lib = File.expand_path("../lib", __FILE__)
+lib = File.expand_path("lib", __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "barcodevalidation/version"
 
@@ -14,8 +13,8 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/marketplacer/#{spec.name}"
   spec.license       = "MIT"
 
-  spec.files         = %w(LICENSE.md README.md barcodevalidation.gemspec
-                          config/*.rb lib/**/*.rb)
+  spec.files         = %w[LICENSE.md README.md barcodevalidation.gemspec
+                          config/*.rb lib/**/*.rb]
                        .flat_map { |pattern| Dir.glob(pattern) }
                        .reject { |f| File.directory?(f) }
   spec.bindir        = "exe"
