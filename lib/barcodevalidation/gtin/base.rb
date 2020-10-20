@@ -27,6 +27,15 @@ module BarcodeValidation
 
       class AbstractMethodError < StandardError; end
 
+      def to_all_valid
+        [
+          to_gtin_8,
+          to_gtin_12,
+          to_gtin_13,
+          to_gtin_14
+        ].select(&:valid?)
+      end
+
       def to_gtin_8
         is_a?(GTIN8) ? self : transcode_to(GTIN8)
       end
