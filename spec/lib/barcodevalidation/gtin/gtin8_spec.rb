@@ -40,4 +40,55 @@ RSpec.describe BarcodeValidation::GTIN::GTIN8 do
       end
     end
   end
+
+  context "converstion" do
+    let(:input) { "12345670" }
+
+    before do
+      expect(gtin.is_a?(described_class)).to be_truthy
+      expect(gtin).to be_valid
+    end
+
+    context "to GTIN-8" do
+      it 'returns itself' do
+        expect(gtin.to_gtin_8).to eq(gtin)
+      end
+    end
+
+    context "to GTIN-12" do
+      let(:gtin12) { gtin.to_gtin_12 }
+
+      before do
+        expect(gtin12.is_a?(BarcodeValidation::GTIN::GTIN12)).to be_truthy
+      end
+
+      it 'returns a valid GTIN-12' do
+        expect(gtin12).to be_valid
+      end
+    end
+
+    context "to GTIN-13" do
+      let(:gtin13) { gtin.to_gtin_13 }
+
+      before do
+        expect(gtin13.is_a?(BarcodeValidation::GTIN::GTIN13)).to be_truthy
+      end
+
+      it 'returns a valid GTIN-13' do
+        expect(gtin13).to be_valid
+      end
+    end
+
+    context "to GTIN-14" do
+      let(:gtin14) { gtin.to_gtin_14 }
+
+      before do
+        expect(gtin14.is_a?(BarcodeValidation::GTIN::GTIN14)).to be_truthy
+      end
+
+      it 'returns a valid GTIN-14' do
+        expect(gtin14).to be_valid
+      end
+    end
+  end
 end
