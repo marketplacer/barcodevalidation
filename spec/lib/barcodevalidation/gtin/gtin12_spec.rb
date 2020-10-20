@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "barcodevalidation/mixin/has_check_digit"
 require "barcodevalidation/mixin/value_object"
 require "barcodevalidation/digit"

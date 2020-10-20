@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module BarcodeValidation
   module GTIN
     class GTIN14 < BarcodeValidation::GTIN::Base
