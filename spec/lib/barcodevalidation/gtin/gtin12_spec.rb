@@ -40,4 +40,95 @@ RSpec.describe BarcodeValidation::GTIN::GTIN12 do
       end
     end
   end
+
+  context "converstion" do
+    before do
+      expect(gtin.is_a?(described_class)).to be_truthy
+      expect(gtin).to be_valid
+    end
+
+    context "to GTIN-8" do
+      let(:gtin8) { gtin.to_gtin_8 }
+
+      context "when prefixed with zeros" do
+        let(:input) { "000012345670" }
+
+        it 'is valid' do
+          expect(gtin8).to be_valid
+        end
+
+        it 'is a BarcodeValidation::GTIN::GTIN8 instance' do
+          expect(gtin8.is_a?(BarcodeValidation::GTIN::GTIN8)).to be_truthy
+        end
+      end
+
+      context "when not prefixed with zeros" do
+        let(:input) { "123456789012" }
+
+        it 'is not valid' do
+          expect(gtin8).to_not be_valid
+        end
+
+        it 'is a BarcodeValidation::InvalidGTIN instance' do
+          expect(gtin8.is_a?(BarcodeValidation::InvalidGTIN)).to be_truthy
+        end
+      end
+    end
+
+    context "to GTIN-12" do
+      let(:input) { "123456789012" }
+
+      it 'returns itself' do
+        expect(gtin.to_gtin_12).to eq(gtin)
+      end
+    end
+
+    context "to GTIN-13" do
+      let(:gtin13) { gtin.to_gtin_13 }
+
+      before do
+        expect(gtin13.is_a?(BarcodeValidation::GTIN::GTIN13)).to be_truthy
+      end
+
+      context "when prefixed with zeros" do
+        let(:input) { "000012345670" }
+
+        it 'returns a valid GTIN-13' do
+          expect(gtin13).to be_valid
+        end
+      end
+
+      context "when not prefixed with zeros" do
+        let(:input) { "123456789012" }
+
+        it 'returns a valid GTIN-13' do
+          expect(gtin13).to be_valid
+        end
+      end
+    end
+
+    context "to GTIN-14" do
+      let(:gtin14) { gtin.to_gtin_14 }
+
+      before do
+        expect(gtin14.is_a?(BarcodeValidation::GTIN::GTIN14)).to be_truthy
+      end
+
+      context "when prefixed with zeros" do
+        let(:input) { "000012345670" }
+
+        it 'is valid' do
+          expect(gtin14).to be_valid
+        end
+      end
+
+      context "when not prefixed with zeros" do
+        let(:input) { "123456789012" }
+
+        it 'returns a valid GTIN-14' do
+          expect(gtin14).to be_valid
+        end
+      end
+    end
+  end
 end
