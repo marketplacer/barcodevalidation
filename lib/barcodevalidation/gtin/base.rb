@@ -82,7 +82,7 @@ module BarcodeValidation
       # BarcodeValidation::InvalidGTIN with valid? = false and a meaningful
       # error message.
       def transcode_to(klass)
-        gtin = klass.new("%0#{klass.new(nil).valid_length}d" % to_s.gsub(/^0+/, ""))
+        gtin = klass.new(format("%0#{klass.new(nil).valid_length}d", to_s.gsub(/^0+/, "")))
 
         if gtin.valid?
           gtin
