@@ -21,6 +21,7 @@ module BarcodeValidation
 
       def inspect
         return super if valid?
+
         "#<#{self.class}(#{actual}) invalid: expected #{expected}>"
       end
     end

@@ -35,7 +35,7 @@ RSpec.describe BarcodeValidation::GTIN do
   end
 
   describe "sequence methods" do
-    let(:input) { 12345678 }
+    let(:input) { 12_345_678 }
     subject(:sequence) { gtin.reverse }
     it { is_expected.to_not be_a described_class }
   end
@@ -47,7 +47,7 @@ RSpec.describe BarcodeValidation::GTIN do
       context "for a zero-padded code" do
         let(:input) { "000012345670" }
 
-        it 'returns an instance of the concrete class for that subset' do
+        it "returns an instance of the concrete class for that subset" do
           expect(gtin8.is_a?(BarcodeValidation::GTIN::GTIN8)).to be_truthy
         end
       end
@@ -55,11 +55,11 @@ RSpec.describe BarcodeValidation::GTIN do
       context "for a code that is not zero-padded" do
         let(:input) { "123456789012" }
 
-        it 'returns a BarcodeValidation::InvalidGTIN instance' do
+        it "returns a BarcodeValidation::InvalidGTIN instance" do
           expect(gtin8.is_a?(BarcodeValidation::InvalidGTIN)).to be_truthy
         end
 
-        it 'has a meaningful error message' do
+        it "has a meaningful error message" do
           expect(gtin8.error_message).to eq("invalid value for BarcodeValidation::GTIN::GTIN8(): #{input.inspect}")
         end
       end

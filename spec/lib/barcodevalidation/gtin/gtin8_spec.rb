@@ -13,7 +13,7 @@ RSpec.describe BarcodeValidation::GTIN::GTIN8 do
     context "whith a valid 8-digit code" do
       let(:input) { "12345670" }
 
-      it 'is true' do
+      it "is true" do
         expect(gtin).to be_valid
       end
     end
@@ -21,7 +21,7 @@ RSpec.describe BarcodeValidation::GTIN::GTIN8 do
     context "with a valid 12-digit code" do
       let(:input) { "123456789012" }
 
-      it 'is false' do
+      it "is false" do
         expect(gtin).to_not be_valid
       end
     end
@@ -29,7 +29,7 @@ RSpec.describe BarcodeValidation::GTIN::GTIN8 do
     context "with a valid 13-digit code" do
       let(:input) { "1234567890128" }
 
-      it 'is false' do
+      it "is false" do
         expect(gtin).to_not be_valid
       end
     end
@@ -37,7 +37,7 @@ RSpec.describe BarcodeValidation::GTIN::GTIN8 do
     context "with a valid 14-digit code" do
       let(:input) { "12345678901231" }
 
-      it 'is false' do
+      it "is false" do
         expect(gtin).to_not be_valid
       end
     end
@@ -52,7 +52,7 @@ RSpec.describe BarcodeValidation::GTIN::GTIN8 do
     end
 
     context "to GTIN-8" do
-      it 'returns itself' do
+      it "returns itself" do
         expect(gtin.to_gtin_8).to eq(gtin)
       end
     end
@@ -64,7 +64,7 @@ RSpec.describe BarcodeValidation::GTIN::GTIN8 do
         expect(gtin12.is_a?(BarcodeValidation::GTIN::GTIN12)).to be_truthy
       end
 
-      it 'returns a valid GTIN-12' do
+      it "returns a valid GTIN-12" do
         expect(gtin12).to be_valid
       end
     end
@@ -76,7 +76,7 @@ RSpec.describe BarcodeValidation::GTIN::GTIN8 do
         expect(gtin13.is_a?(BarcodeValidation::GTIN::GTIN13)).to be_truthy
       end
 
-      it 'returns a valid GTIN-13' do
+      it "returns a valid GTIN-13" do
         expect(gtin13).to be_valid
       end
     end
@@ -88,26 +88,26 @@ RSpec.describe BarcodeValidation::GTIN::GTIN8 do
         expect(gtin14.is_a?(BarcodeValidation::GTIN::GTIN14)).to be_truthy
       end
 
-      it 'returns a valid GTIN-14' do
+      it "returns a valid GTIN-14" do
         expect(gtin14).to be_valid
       end
     end
 
     context "to_all_valid" do
-      it 'includes a GTIN-8 instance' do
-        expect(gtin.to_all_valid.any? {|code| code.is_a?(BarcodeValidation::GTIN::GTIN8)}).to be_truthy
+      it "includes a GTIN-8 instance" do
+        expect(gtin.to_all_valid.any? { |code| code.is_a?(BarcodeValidation::GTIN::GTIN8) }).to be_truthy
       end
 
-      it 'includes a GTIN-12 instance' do
-        expect(gtin.to_all_valid.any? {|code| code.is_a?(BarcodeValidation::GTIN::GTIN12)}).to be_truthy
+      it "includes a GTIN-12 instance" do
+        expect(gtin.to_all_valid.any? { |code| code.is_a?(BarcodeValidation::GTIN::GTIN12) }).to be_truthy
       end
 
-      it 'includes a GTIN-13 instance' do
-        expect(gtin.to_all_valid.any? {|code| code.is_a?(BarcodeValidation::GTIN::GTIN13)}).to be_truthy
+      it "includes a GTIN-13 instance" do
+        expect(gtin.to_all_valid.any? { |code| code.is_a?(BarcodeValidation::GTIN::GTIN13) }).to be_truthy
       end
 
-      it 'includes a GTIN-14 instance' do
-        expect(gtin.to_all_valid.any? {|code| code.is_a?(BarcodeValidation::GTIN::GTIN14)}).to be_truthy
+      it "includes a GTIN-14 instance" do
+        expect(gtin.to_all_valid.any? { |code| code.is_a?(BarcodeValidation::GTIN::GTIN14) }).to be_truthy
       end
     end
   end

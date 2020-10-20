@@ -24,7 +24,7 @@ module BarcodeValidation
       end
 
       def valid_length
-        raise AbstractMethodError.new("Concrete classes must define #valid_length")
+        raise AbstractMethodError, "Concrete classes must define #valid_length"
       end
 
       class AbstractMethodError < StandardError; end
@@ -34,7 +34,7 @@ module BarcodeValidation
           to_gtin_8,
           to_gtin_12,
           to_gtin_13,
-          to_gtin_14
+          to_gtin_14,
         ].select(&:valid?)
       end
 
@@ -82,12 +82,16 @@ module BarcodeValidation
       # BarcodeValidation::InvalidGTIN with valid? = false and a meaningful
       # error message.
       def transcode_to(klass)
-        gtin = klass.new("%0#{klass.new(nil).valid_length}d" % self.to_s.gsub(/^0+/, ""))
+        gtin = klass.new("%0#{klass.new(nil).valid_length}d" % to_s.gsub(/^0+/, ""))
 
-        gtin.valid? ? gtin : BarcodeValidation::InvalidGTIN.new(
-          input,
-          error: klass::ConversionError.new(klass).exception(input)
-        )
+        if gtin.valid?
+          gtin
+        else
+          BarcodeValidation::InvalidGTIN.new(
+            input,
+            error: klass::ConversionError.new(klass).exception(input),
+          )
+        end
       end
 
       ConversionError = Error::ArgumentErrorClass.new(self)
