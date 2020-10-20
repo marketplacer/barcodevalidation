@@ -94,8 +94,14 @@ RSpec.describe BarcodeValidation::GTIN::GTIN8 do
     end
 
     context "to_all_valid" do
+      let(:includes_gtin8) do
+        gtin.to_all_valid.any? do |code|
+          code.is_a?(BarcodeValidation::GTIN::GTIN8)
+        end
+      end
+
       it "includes a GTIN-8 instance" do
-        expect(gtin.to_all_valid.any? { |code| code.is_a?(BarcodeValidation::GTIN::GTIN8) }).to be_truthy
+        expect(includes_gtin8).to be_truthy
       end
 
       it "includes a GTIN-12 instance" do

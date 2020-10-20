@@ -54,13 +54,17 @@ RSpec.describe BarcodeValidation::GTIN do
 
       context "for a code that is not zero-padded" do
         let(:input) { "123456789012" }
+        let(:error_message) do
+          "invalid value for BarcodeValidation::GTIN::GTIN8(): #{input.inspect}"
+        end
+        let(:is_an_invalid_gtin) { gtin8.is_a?(BarcodeValidation::InvalidGTIN) }
 
         it "returns a BarcodeValidation::InvalidGTIN instance" do
-          expect(gtin8.is_a?(BarcodeValidation::InvalidGTIN)).to be_truthy
+          expect(is_an_invalid_gtin).to be_truthy
         end
 
         it "has a meaningful error message" do
-          expect(gtin8.error_message).to eq("invalid value for BarcodeValidation::GTIN::GTIN8(): #{input.inspect}")
+          expect(gtin8.error_message).to eq(error_message)
         end
       end
     end
