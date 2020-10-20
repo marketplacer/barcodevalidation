@@ -35,7 +35,7 @@ RSpec.describe BarcodeValidation::GTIN do
   end
 
   describe "sequence methods" do
-    let(:input) { 123 }
+    let(:input) { 12345678 }
     subject(:sequence) { gtin.reverse }
     it { is_expected.to_not be_a described_class }
   end
