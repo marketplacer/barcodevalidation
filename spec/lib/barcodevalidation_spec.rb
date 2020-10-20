@@ -106,4 +106,3 @@ RSpec.describe BarcodeValidation do
     end
   end
 end
-
