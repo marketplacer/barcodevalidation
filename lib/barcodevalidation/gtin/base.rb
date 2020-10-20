@@ -27,6 +27,22 @@ module BarcodeValidation
 
       class AbstractMethodError < StandardError; end
 
+      def to_gtin_8
+        is_a?(GTIN8) ? self : transcode_to(GTIN8)
+      end
+
+      def to_gtin_12
+        is_a?(GTIN12) ? self : transcode_to(GTIN12)
+      end
+
+      def to_gtin_13
+        is_a?(GTIN13) ? self : transcode_to(GTIN13)
+      end
+
+      def to_gtin_14
+        is_a?(GTIN14) ? self : transcode_to(GTIN14)
+      end
+
       private
 
       def check_digit
@@ -47,6 +63,23 @@ module BarcodeValidation
       def checkable_digits
         take(length - 1).reverse.map(&:to_i)
       end
+
+      # Instantiates the given class with the string value of this instance
+      # with any leading zeros stripped out, and then zero-padded up to the
+      # valid length of the given class. If the resulting string is <> the
+      # valid length of the target format, the returned object will be a
+      # BarcodeValidation::InvalidGTIN with valid? = false and a meaningful
+      # error message.
+      def transcode_to(klass)
+        gtin = klass.new("%0#{klass.new(nil).valid_length}d" % self.to_s.gsub(/^0+/, ""))
+
+        gtin.valid? ? gtin : BarcodeValidation::InvalidGTIN.new(
+          input,
+          error: klass::ConversionError.new(klass).exception(input)
+        )
+      end
+
+      ConversionError = Error::ArgumentErrorClass.new(self)
     end
   end
 end
