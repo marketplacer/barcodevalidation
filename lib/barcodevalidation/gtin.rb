@@ -12,7 +12,7 @@ require_relative "gtin/gtin14"
 module BarcodeValidation
   module GTIN
     def self.new(input)
-      module_eval("GTIN#{input.to_s.size}").new(input)
+      module_eval("GTIN#{input.to_s.size}", __FILE__, __LINE__).new(input)
     rescue NameError => e
       BarcodeValidation::InvalidGTIN.new(input, error: e)
     end
