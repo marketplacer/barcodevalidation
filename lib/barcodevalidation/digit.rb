@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "delegate"
 
 module BarcodeValidation
@@ -10,6 +12,7 @@ module BarcodeValidation
     def initialize(input)
       value = Integer(input)
       raise ::ArgumentError unless (0..9).cover? value
+
       super(value)
     rescue *INTEGER_CAST_ERRORS
       raise Digit::ArgumentError, input

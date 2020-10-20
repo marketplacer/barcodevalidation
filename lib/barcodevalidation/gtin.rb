@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "forwardable"
 
 module BarcodeValidation
@@ -36,6 +38,7 @@ module BarcodeValidation
 
       def inspect
         return super if valid?
+
         "#<#{self.class}(#{actual}) invalid: expected #{expected}>"
       end
     end

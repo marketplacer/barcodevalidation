@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "barcodevalidation/mixin"
 require "barcodevalidation/error"
 require "barcodevalidation/digit"
@@ -23,6 +25,7 @@ module BarcodeValidation
     # Strips punctuation
     def sanitize(input)
       return input.gsub(/(\s|[-_])/, "") if input.respond_to? :gsub
+
       input
     end
   end

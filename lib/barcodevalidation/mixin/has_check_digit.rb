@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module BarcodeValidation
   module Mixin
     # Wraps #last as a CheckDigit

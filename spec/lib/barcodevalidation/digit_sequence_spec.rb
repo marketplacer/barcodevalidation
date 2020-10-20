@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "barcodevalidation/mixin/value_object"
 require "barcodevalidation/error/argument_error_class"
 require "barcodevalidation/digit"

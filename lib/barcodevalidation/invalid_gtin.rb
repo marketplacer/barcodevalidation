@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "delegate"
 
 module BarcodeValidation
@@ -17,6 +19,7 @@ module BarcodeValidation
 
     def error_message
       return @error.message if @error.respond_to? :message
+
       @error.inspect
     end
   end

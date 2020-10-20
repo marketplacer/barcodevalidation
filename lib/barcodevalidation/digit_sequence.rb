@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "forwardable"
 
 module BarcodeValidation
@@ -18,6 +20,7 @@ module BarcodeValidation
     def initialize(values)
       values = cast(values)
       raise ArgumentError, values unless values.respond_to? :map
+
       super(values.map { |value| BarcodeValidation::Digit.new(value) })
     end
 

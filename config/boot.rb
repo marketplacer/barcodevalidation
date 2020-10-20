@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This script sets up the common environment for the project
 #
 # Require this file using:
