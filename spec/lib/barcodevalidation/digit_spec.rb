@@ -4,7 +4,6 @@ require "barcodevalidation/error/argument_error_class"
 require "barcodevalidation/mixin/value_object"
 require "barcodevalidation/digit"
 
-# rubocop:disable Metrics/BlockLength
 RSpec.describe BarcodeValidation::Digit do
   subject(:digit) { described_class.new(input) }
   let(:input) { 9 }
@@ -93,4 +92,3 @@ RSpec.describe BarcodeValidation::Digit do
     end
   end
 end
-# rubocop:enable Metrics/BlockLength

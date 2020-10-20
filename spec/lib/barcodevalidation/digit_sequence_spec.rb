@@ -5,7 +5,6 @@ require "barcodevalidation/error/argument_error_class"
 require "barcodevalidation/digit"
 require "barcodevalidation/digit_sequence"
 
-# rubocop:disable Metrics/BlockLength
 RSpec.describe BarcodeValidation::DigitSequence do
   subject(:sequence) { described_class.new(input) }
   let(:input) { 123_456 }
@@ -114,4 +113,3 @@ RSpec.describe BarcodeValidation::DigitSequence do
     end
   end
 end
-# rubocop:enable Metrics/BlockLength
