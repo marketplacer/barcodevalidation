@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "forwardable"
+require_relative "error/argument_error_class"
 
 module BarcodeValidation
   class DigitSequence < Array
