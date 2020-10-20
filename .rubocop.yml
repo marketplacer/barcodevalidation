@@ -4,15 +4,19 @@ AllCops:
   Include:
     - 'Gemfile'
     - 'Rakefile'
-    - 'bin/bundle'
-    - 'bin/console'
-    - 'bin/rake'
-    - 'bin/rspec'
-    - 'bin/rubocop'
     - 'config/*'
     - '*.gemspec'
     - '**/*.rb'
-  TargetRubyVersion: 2.2
+  Exclude:
+    - .bundle/**/*
+    - bin/bundle
+    - bin/console
+    - bin/rake
+    - bin/rspec
+    - bin/rubocop
+    - bin/setup
+    - vendor/**/*
+  TargetRubyVersion: 2.5
 
 # Single-quotes aren't quotes, they're apostrophes! D:
 Style/StringLiterals:
@@ -71,13 +75,17 @@ Style/TrailingCommaInArguments:
 # Tighten up the metrics
 
 Metrics/AbcSize:
-  Max: 6 # Rubocop default: 15
+  Max: 15 # Rubocop default: 15
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/* # DSL is block-heavy
 
 Metrics/BlockNesting:
   Max: 2 # Rubocop default: 3
 
 Metrics/ClassLength:
-  Max: 32 # Rubocop default: 100
+  Max: 100 # Rubocop default: 100
 
 Metrics/ModuleLength:
   Max: 30 # Rubocop default: 100
@@ -86,10 +94,10 @@ Metrics/CyclomaticComplexity:
   Max: 5 # Rubocop default: 6
 
 Metrics/LineLength:
-  Max: 72 # Rubocop default: 80
+  Max: 180 # Rubocop default: 80
 
 Metrics/MethodLength:
-  Max: 5 # Rubocop default: 10
+  Max: 10 # Rubocop default: 10
 
 Metrics/ParameterLists:
   Max: 2 # Rubocop default: 5
