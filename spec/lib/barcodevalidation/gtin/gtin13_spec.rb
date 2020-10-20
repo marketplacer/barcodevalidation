@@ -137,5 +137,43 @@ RSpec.describe BarcodeValidation::GTIN::GTIN13 do
         end
       end
     end
+
+    context "to_all_valid" do
+      context "with a zero-padded GTIN-8 code" do
+        let(:input) { "0000012345670" }
+
+        it 'includes a GTIN-8 instance' do
+          expect(gtin.to_all_valid.any? {|code| code.is_a?(BarcodeValidation::GTIN::GTIN8)}).to be_truthy
+        end
+      end
+
+      context "with a zero-padded GTIN-12 code" do
+        let(:input) { "0123456789012" }
+
+        it 'includes a GTIN-12 instance' do
+          expect(gtin.to_all_valid.any? {|code| code.is_a?(BarcodeValidation::GTIN::GTIN12)}).to be_truthy
+        end
+      end
+
+      context "when a GTIN-13 code without zero padding" do
+        let(:input) { "1234567890128" }
+
+        it 'does not includes a GTIN-8 instance' do
+          expect(gtin.to_all_valid.none? {|code| code.is_a?(BarcodeValidation::GTIN::GTIN8)}).to be_truthy
+        end
+
+        it 'does not includes a GTIN-12 instance' do
+          expect(gtin.to_all_valid.none? {|code| code.is_a?(BarcodeValidation::GTIN::GTIN12)}).to be_truthy
+        end
+
+        it 'includes a GTIN-13 instance' do
+          expect(gtin.to_all_valid.any? {|code| code.is_a?(BarcodeValidation::GTIN::GTIN13)}).to be_truthy
+        end
+
+        it 'includes a zero-padded GTIN-14 instance' do
+          expect(gtin.to_all_valid.any? {|code| code.is_a?(BarcodeValidation::GTIN::GTIN14)}).to be_truthy
+        end
+      end
+    end
   end
 end
