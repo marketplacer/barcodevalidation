@@ -90,5 +90,23 @@ RSpec.describe BarcodeValidation::GTIN::GTIN8 do
         expect(gtin14).to be_valid
       end
     end
+
+    context "to_all_valid" do
+      it 'includes a GTIN-8 instance' do
+        expect(gtin.to_all_valid.any? {|code| code.is_a?(BarcodeValidation::GTIN::GTIN8)}).to be_truthy
+      end
+
+      it 'includes a GTIN-12 instance' do
+        expect(gtin.to_all_valid.any? {|code| code.is_a?(BarcodeValidation::GTIN::GTIN12)}).to be_truthy
+      end
+
+      it 'includes a GTIN-13 instance' do
+        expect(gtin.to_all_valid.any? {|code| code.is_a?(BarcodeValidation::GTIN::GTIN13)}).to be_truthy
+      end
+
+      it 'includes a GTIN-14 instance' do
+        expect(gtin.to_all_valid.any? {|code| code.is_a?(BarcodeValidation::GTIN::GTIN14)}).to be_truthy
+      end
+    end
   end
 end
