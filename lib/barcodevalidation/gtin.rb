@@ -1,46 +1,20 @@
 # frozen_string_literal: true
 
 require "forwardable"
+require_relative "invalid_gtin"
+require_relative "gtin/base"
+require_relative "gtin/check_digit"
+require_relative "gtin/gtin8"
+require_relative "gtin/gtin12"
+require_relative "gtin/gtin13"
+require_relative "gtin/gtin14"
 
 module BarcodeValidation
-  class GTIN < BarcodeValidation::DigitSequence
-    extend Forwardable
-    include Mixin::HasCheckDigit
-
-    VALID_LENGTHS = [8, 12, 13, 14].freeze
-
+  module GTIN
     def self.new(input)
-      super
-    rescue BarcodeValidation::Error => e
-      InvalidGTIN.new(input, error: e)
-    end
-
-    def valid?
-      VALID_LENGTHS.include?(length) && check_digit.valid?
-    end
-
-    class CheckDigit < DelegateClass(Digit)
-      include Adamantium::Flat
-      include Mixin::ValueObject
-
-      attr_reader :actual, :expected
-
-      def initialize(actual, expected: nil)
-        expected = actual if expected.nil?
-        @expected = Digit.new(expected)
-        @actual = Digit.new(actual)
-        super(@actual)
-      end
-
-      def valid?
-        actual == expected
-      end
-
-      def inspect
-        return super if valid?
-
-        "#<#{self.class}(#{actual}) invalid: expected #{expected}>"
-      end
+      module_eval("GTIN#{input.to_s.size}").new(input)
+    rescue NameError => e
+      BarcodeValidation::InvalidGTIN.new(input, error: e)
     end
   end
 end
