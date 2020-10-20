@@ -47,7 +47,6 @@ RSpec.describe BarcodeValidation do
     Class.new,
     Object.new,
     0...10,
-    /abcd/,
   ].freeze
 
   describe ".scan" do
