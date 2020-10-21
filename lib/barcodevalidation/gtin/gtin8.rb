@@ -3,9 +3,7 @@
 module BarcodeValidation
   module GTIN
     class GTIN8 < BarcodeValidation::GTIN::Base
-      def valid_length
-        8
-      end
+      VALID_LENGTH = 8
     end
   end
 end
