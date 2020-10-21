@@ -40,6 +40,48 @@ RSpec.describe BarcodeValidation::GTIN do
     it { is_expected.to_not be_a described_class }
   end
 
+  describe "factory interface" do
+    context "for 8-digit input" do
+      let(:input) { "12345678" }
+
+      it 'constructs a BarcodeValidation::GTIN::GTIN8' do
+        expect(gtin.is_a?(BarcodeValidation::GTIN::GTIN8)).to be_truthy
+      end
+    end
+
+    context "for 12-digit input" do
+      let(:input) { "123456789012" }
+
+      it 'constructs a BarcodeValidation::GTIN::GTIN12' do
+        expect(gtin.is_a?(BarcodeValidation::GTIN::GTIN12)).to be_truthy
+      end
+    end
+
+    context "for 13-digit input" do
+      let(:input) { "1234567890123" }
+
+      it 'constructs a BarcodeValidation::GTIN::GTIN13' do
+        expect(gtin.is_a?(BarcodeValidation::GTIN::GTIN13)).to be_truthy
+      end
+    end
+
+    context "for 14-digit input" do
+      let(:input) { "12345678901234" }
+
+      it 'constructs a BarcodeValidation::GTIN::GTIN14' do
+        expect(gtin.is_a?(BarcodeValidation::GTIN::GTIN14)).to be_truthy
+      end
+    end
+
+    context "for non-standard input length" do
+      let(:input) { "1234" }
+
+      it 'constructs a BarcodeValidation::InvalidGTIN' do
+        expect(gtin.is_a?(BarcodeValidation::InvalidGTIN)).to be_truthy
+      end
+    end
+  end
+
   describe "conversion" do
     context "when converting from a superset down to a subset" do
       let(:gtin8) { gtin.to_gtin_8 }
