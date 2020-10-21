@@ -11,10 +11,18 @@ require_relative "gtin/gtin14"
 
 module BarcodeValidation
   module GTIN
-    def self.new(input)
-      module_eval("GTIN#{input.to_s.size}", __FILE__, __LINE__).new(input)
-    rescue NameError => e
-      BarcodeValidation::InvalidGTIN.new(input, error: e)
+    class << self
+      def new(input)
+        (class_for_input(input) || BarcodeValidation::InvalidGTIN).new(input)
+      end
+
+      private
+
+      def class_for_input(input)
+        [GTIN8, GTIN12, GTIN13, GTIN14].find do |klass|
+          input.to_s.size == klass::VALID_LENGTH
+        end
+      end
     end
   end
 end
