@@ -104,5 +104,41 @@ RSpec.describe BarcodeValidation do
         expect(realtime / valid_inputs.count).to be < 0.000_05 # 50us
       end
     end
+
+    describe "conversion" do
+      context "for an invalid barcode" do
+        let(:input) { "123456" }
+
+        context "#to_all_valid" do
+          it "is an empty array" do
+            expect(subject.to_all_valid).to eq([])
+          end
+        end
+
+        context "#to_gtin_8" do
+          it "is a BarcodeValidation::InvalidGTIN" do
+            expect(subject.to_gtin_8.is_a?(BarcodeValidation::InvalidGTIN)).to be_truthy
+          end
+        end
+
+        context "#to_gtin_12" do
+          it "is a BarcodeValidation::InvalidGTIN" do
+            expect(subject.to_gtin_12.is_a?(BarcodeValidation::InvalidGTIN)).to be_truthy
+          end
+        end
+
+        context "#to_gtin_13" do
+          it "is a BarcodeValidation::InvalidGTIN" do
+            expect(subject.to_gtin_13.is_a?(BarcodeValidation::InvalidGTIN)).to be_truthy
+          end
+        end
+
+        context "#to_gtin_14" do
+          it "is a BarcodeValidation::InvalidGTIN" do
+            expect(subject.to_gtin_14.is_a?(BarcodeValidation::InvalidGTIN)).to be_truthy
+          end
+        end
+      end
+    end
   end
 end
