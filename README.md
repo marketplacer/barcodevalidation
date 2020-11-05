@@ -40,20 +40,26 @@ and it's pretty flexible about what you give it.
 
 ```ruby
 gtin = BarcodeValidation.scan("937179-004167")
-# => #<BarcodeValidation::GTIN(937179004167)>
+# => #<BarcodeValidation::GTIN::GTIN12(937179004167)>
 gtin.to_s        # => "937179004167"
 gtin.valid?      # => true
 gtin.check_digit # => #<BarcodeValidation::GTIN::CheckDigit(7)>
 gtin.first(6)    # => #<BarcodeValidation::DigitSequence(937179)>
 gtin.slice(0..5) # => #<BarcodeValidation::DigitSequence(937179)>
+gtin.to_gtin_13  # => #<BarcodeValidation::GTIN::GTIN13(0937179004167)>
+gtin.to_all_valid
+# => [#<BarcodeValidation::GTIN::GTIN12(937179004167)>,
+#<BarcodeValidation::GTIN::GTIN123(0937179004167)>]
 
 bad = BarcodeValidation.scan(937_179_004_162)
-# => #<BarcodeValidation::GTIN(937179004162)>
+# => #<BarcodeValidation::InvalidGTIN(937179004162)>
 bad.valid?               # => false
 bad.check_digit          # => #<BarcodeValidation::GTIN::CheckDigit(2) invalid: expected 7>
 bad.check_digit.valid?   # => false
 bad.check_digit.actual   # => #<BarcodeValidation::Digit(2)>
 bad.check_digit.expected # => #<BarcodeValidation::Digit(7)>
+bad.to_gtin_13           # => #<BarcodeValidation::InvalidGTIN(937179004162)>
+bad.to_all_valid         # => []
 ```
 
 
