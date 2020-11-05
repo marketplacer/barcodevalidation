@@ -22,5 +22,25 @@ module BarcodeValidation
 
       @error.inspect
     end
+
+    def to_all_valid
+      []
+    end
+
+    def to_gtin_8
+      self
+    end
+
+    def to_gtin_12
+      self
+    end
+
+    def to_gtin_13
+      self
+    end
+
+    def to_gtin_14
+      self
+    end
   end
 end
