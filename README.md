@@ -1,11 +1,11 @@
 barcodevalidation
 =================
 
-[![Build Status][travis-badge]][travis]
+[![Build Status][ci-badge]][ci]
 [![Gem Version][rubygems-badge]][rubygems]
 
-[travis]: <https://travis-ci.org/marketplacer/barcodevalidation>
-[travis-badge]: <https://travis-ci.org/marketplacer/barcodevalidation.svg?branch=master>
+[ci]: <https://buildkite.com/marketplacer/barcodevalidation>
+[ci-badge]: <https://badge.buildkite.com/d0d578653bc319cd41e9adb2ac23f1c0d59cf56ee6cc329d78.svg?branch=master>
 [rubygems]: <https://badge.fury.io/rb/barcodevalidation>
 [rubygems-badge]: <https://badge.fury.io/rb/barcodevalidation.svg>
 
@@ -106,8 +106,7 @@ bin/rubocop --help
 Continuous Integration
 ----------------------
 
-Code is automatically tested with each push, on both Travis CI and
-Marketplacer's internal Buildkite.
+Code is automatically tested with each push on Buildkite.
 
 
 
