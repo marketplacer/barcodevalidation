@@ -14,3 +14,11 @@ steps:
           run: test
           args:
             RUBY_VERSION=2.6
+  - name: ':git: Lint commits'
+    command: 'yarn run lint:commits:branch'
+    # we don't modify main commits, so it's too late to lint here
+    branches: '!main'
+    plugins:
+      - docker-compose#v3.7.0:
+          config: .buildkite/docker/docker-compose.yml
+          run: node
