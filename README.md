@@ -5,7 +5,7 @@ barcodevalidation
 [![Gem Version][rubygems-badge]][rubygems]
 
 [ci]: <https://buildkite.com/marketplacer/barcodevalidation>
-[ci-badge]: <https://badge.buildkite.com/d0d578653bc319cd41e9adb2ac23f1c0d59cf56ee6cc329d78.svg?branch=master>
+[ci-badge]: <https://badge.buildkite.com/d0d578653bc319cd41e9adb2ac23f1c0d59cf56ee6cc329d78.svg?branch=main>
 [rubygems]: <https://badge.fury.io/rb/barcodevalidation>
 [rubygems-badge]: <https://badge.fury.io/rb/barcodevalidation.svg>
 
@@ -138,4 +138,4 @@ This project is licensed under the [MIT License]. See [LICENSE.md] for
 the full text.
 
 [MIT License]: <https://opensource.org/licenses/MIT>
-[LICENSE.md]: <https://github.com/marketplacer/barcodevalidation/blob/master/LICENSE.md>
+[LICENSE.md]: <https://github.com/marketplacer/barcodevalidation/blob/main/LICENSE.md>
