@@ -103,10 +103,10 @@ bin/rubocop --help
 
 
 
-Continuous Integration
+Tests & Publishing
 ----------------------
 
-Code is automatically tested with each push on Buildkite.
+Code is automatically tested with each push on Buildkite. Assuming all tests pass, commits on `main` will be parsed with [Semantic Release](https://github.com/semantic-release/semantic-release) to produce new Git tags, and to publish to RubyGems.
 
 
 

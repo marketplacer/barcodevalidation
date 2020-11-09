@@ -1,0 +1,21 @@
+{
+  "name": "barcodevalidation",
+  "version": "1.0.0",
+  "repository": "git@github.com:marketplacer/barcodevalidation.git",
+  "author": "Marketplacer <it@marketplacer.com>",
+  "scripts": {
+    "lint:commits:branch": "commitlint --from origin/HEAD --to HEAD --verbose"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@marketplacer/commitlint-config": "^0.1.3",
+    "husky": "^4.3.0",
+    "semantic-release": "^17.2.2",
+    "semantic-release-rubygem": "^1.2.0"
+  }
+}
