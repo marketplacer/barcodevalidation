@@ -6,10 +6,7 @@ services:
       dockerfile: '.buildkite/docker/Dockerfile'
       context: '../../'
     command: ["bin/rake"]
-  node:
+  commitlint:
     build:
-      dockerfile: '.buildkite/docker/node.Dockerfile'
+      dockerfile: '.buildkite/docker/commitlint.Dockerfile'
       context: '../../'
-    volumes:
-      - ../../:/app
-      - /app/node_modules

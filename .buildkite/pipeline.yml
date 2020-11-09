@@ -21,7 +21,7 @@ steps:
     plugins:
       - docker-compose#v3.7.0:
           config: .buildkite/docker/docker-compose.yml
-          run: node
+          run: commitlint
 
   - wait
 
@@ -35,7 +35,7 @@ steps:
             GEM_HOST_API_KEY: "buildkite-$BUILDKITE_PIPELINE_SLUG-gem-host-api-key"
       - docker-compose#v3.7.0:
           config: .buildkite/docker/docker-compose.yml
-          run: node
+          run: commitlint
           env:
             - CI
             - GITHUB_TOKEN
