@@ -26,25 +26,19 @@ RSpec.describe BarcodeValidation::DigitSequence do
     context "with an equivalent sequence" do
       let(:other_input) { input }
       it { is_expected.to eq other }
-      it { is_expected.to eql other }
       its(:hash) { is_expected.to eq other.hash }
-      its(:object_id) { is_expected.to eq other.object_id }
     end
 
     context "with a different sequence" do
       let(:other_input) { 987_654 }
       it { is_expected.to_not eq other }
-      it { is_expected.to_not eql other }
       its(:hash) { is_expected.to_not eq other.hash }
-      its(:object_id) { is_expected.to_not eq other.object_id }
     end
 
     context "when the other is unrelated" do
       let(:other) { false }
       it { is_expected.to_not eq other }
-      it { is_expected.to_not eql other }
       its(:hash) { is_expected.to_not eq other.hash }
-      its(:object_id) { is_expected.to_not eq other.object_id }
     end
   end
 

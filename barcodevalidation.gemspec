@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "barcodevalidation/version"
 
 Gem::Specification.new do |spec|
-  spec.required_ruby_version = "~> 2.5"
+  spec.required_ruby_version = ">= 2.5"
   spec.name          = "barcodevalidation"
   spec.version       = BarcodeValidation::VERSION
   spec.authors       = ["Marketplacer"]
@@ -24,6 +24,4 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files
                            .grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
-
-  spec.add_runtime_dependency "adamantium"
 end

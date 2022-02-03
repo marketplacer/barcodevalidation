@@ -3,7 +3,6 @@
 module BarcodeValidation
   module GTIN
     class CheckDigit < DelegateClass(Digit)
-      include Adamantium::Flat
       include Mixin::ValueObject
 
       attr_reader :actual, :expected
