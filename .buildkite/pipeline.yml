@@ -1,54 +1,54 @@
 ---
 steps:
-  - name: ':ruby: 2.5 tests'
-    plugins:
-      - docker-compose#v3.7.0:
-          config: .buildkite/docker/docker-compose.yml
-          run: test
-          args:
-            RUBY_VERSION=2.5
-  - name: ':ruby: 2.6 tests'
-    plugins:
-      - docker-compose#v3.7.0:
-          config: .buildkite/docker/docker-compose.yml
-          run: test
-          args:
-            RUBY_VERSION=2.6
-  - name: ':ruby: 2.7 tests'
-    plugins:
-      - docker-compose#v3.7.0:
-          config: .buildkite/docker/docker-compose.yml
-          run: test
-          args:
-            RUBY_VERSION=2.7
-  - name: ':ruby: 3.0 tests'
-    plugins:
-      - docker-compose#v3.7.0:
-          config: .buildkite/docker/docker-compose.yml
-          run: test
-          args:
-            RUBY_VERSION=3.0
-  - name: ':ruby: 3.1 tests'
-    plugins:
-      - docker-compose#v3.7.0:
-          config: .buildkite/docker/docker-compose.yml
-          run: test
-          args:
-            RUBY_VERSION=3.1
-  - name: ':git: Lint commits'
-    command: 'yarn run lint:commits:branch'
-    # we don't modify main commits, so it's too late to lint here
-    branches: '!main'
-    plugins:
-      - docker-compose#v3.7.0:
-          config: .buildkite/docker/docker-compose.yml
-          run: commitlint
+  # - name: ':ruby: 2.5 tests'
+  #   plugins:
+  #     - docker-compose#v3.7.0:
+  #         config: .buildkite/docker/docker-compose.yml
+  #         run: test
+  #         args:
+  #           RUBY_VERSION=2.5
+  # - name: ':ruby: 2.6 tests'
+  #   plugins:
+  #     - docker-compose#v3.7.0:
+  #         config: .buildkite/docker/docker-compose.yml
+  #         run: test
+  #         args:
+  #           RUBY_VERSION=2.6
+  # - name: ':ruby: 2.7 tests'
+  #   plugins:
+  #     - docker-compose#v3.7.0:
+  #         config: .buildkite/docker/docker-compose.yml
+  #         run: test
+  #         args:
+  #           RUBY_VERSION=2.7
+  # - name: ':ruby: 3.0 tests'
+  #   plugins:
+  #     - docker-compose#v3.7.0:
+  #         config: .buildkite/docker/docker-compose.yml
+  #         run: test
+  #         args:
+  #           RUBY_VERSION=3.0
+  # - name: ':ruby: 3.1 tests'
+  #   plugins:
+  #     - docker-compose#v3.7.0:
+  #         config: .buildkite/docker/docker-compose.yml
+  #         run: test
+  #         args:
+  #           RUBY_VERSION=3.1
+  # - name: ':git: Lint commits'
+  #   command: 'yarn run lint:commits:branch'
+  #   # we don't modify main commits, so it's too late to lint here
+  #   branches: '!main'
+  #   plugins:
+  #     - docker-compose#v3.7.0:
+  #         config: .buildkite/docker/docker-compose.yml
+  #         run: commitlint
 
   - wait
 
   - name: ':shipit: Publish release'
     command: 'yarn run semantic-release'
-    branches: 'main'
+    # branches: 'main'
     plugins:
       - seek-oss/aws-sm#v2.1.0:
           env:
@@ -62,3 +62,4 @@ steps:
             - GITHUB_TOKEN
             - GEM_HOST_API_KEY
             - BUILDKITE_BRANCH
+            - GIT_BRANCH: "$BUILDKITE_BRANCH"
