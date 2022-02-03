@@ -12,12 +12,10 @@ RSpec.describe BarcodeValidation::GTIN::CheckDigit do
     let(:input) { 1 }
 
     it { is_expected.to eq 1 }
-    it { is_expected.to be_frozen }
     it { is_expected.to be_valid }
     its(:to_s) { is_expected.to eq "1" }
     its(:actual) { is_expected.to eq 1 }
     its(:expected) { is_expected.to eq 1 }
-    its(:dup) { is_expected.to be subject }
     its(:inspect) { is_expected.to eq "#<#{described_class}(1)>" }
     its("actual.inspect") { is_expected.to eq digit.expected.inspect }
   end
@@ -28,12 +26,10 @@ RSpec.describe BarcodeValidation::GTIN::CheckDigit do
     let(:expected) { 1 }
 
     it { is_expected.to eq 2 }
-    it { is_expected.to be_frozen }
     it { is_expected.to_not be_valid }
     its(:to_s) { is_expected.to eq "2" }
     its(:actual) { is_expected.to eq 2 }
     its(:expected) { is_expected.to eq 1 }
-    its(:dup) { is_expected.to be subject }
 
     describe "#inspect" do
       subject(:result) { digit.inspect }

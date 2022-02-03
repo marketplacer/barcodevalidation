@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "adamantium"
-
 module BarcodeValidation
   module Mixin
     module ValueObject
@@ -10,10 +8,6 @@ module BarcodeValidation
       end
 
       module ClassMethods
-        # Memoizes return values based on the inputs
-        def new(*args)
-          (@__new_cache ||= {})[args] ||= super
-        end
       end
 
       def eql?(other)

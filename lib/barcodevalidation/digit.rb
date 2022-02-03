@@ -5,7 +5,6 @@ require_relative "error/argument_error_class"
 
 module BarcodeValidation
   class Digit < DelegateClass(Integer)
-    include Adamantium
     include Mixin::ValueObject
 
     INTEGER_CAST_ERRORS = [::ArgumentError, ::TypeError].freeze

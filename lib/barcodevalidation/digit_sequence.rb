@@ -6,7 +6,6 @@ require_relative "error/argument_error_class"
 module BarcodeValidation
   class DigitSequence < Array
     extend Forwardable
-    include Adamantium::Flat
     include Mixin::ValueObject
 
     delegate to_s: :join
@@ -30,6 +29,10 @@ module BarcodeValidation
       when String, Numeric then super(self.class.new(other))
       else super
       end
+    end
+
+    def *(other)
+      self.class.new(super)
     end
 
     ArgumentError = Error::ArgumentErrorClass.new(DigitSequence)
