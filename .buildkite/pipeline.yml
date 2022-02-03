@@ -35,30 +35,3 @@ steps:
           run: test
           args:
             RUBY_VERSION=3.1
-  - name: ':git: Lint commits'
-    command: 'yarn run lint:commits:branch'
-    # we don't modify main commits, so it's too late to lint here
-    branches: '!main'
-    plugins:
-      - docker-compose#v3.7.0:
-          config: .buildkite/docker/docker-compose.yml
-          run: commitlint
-
-  - wait
-
-  - name: ':shipit: Publish release'
-    command: 'yarn run semantic-release'
-    branches: 'main'
-    plugins:
-      - seek-oss/aws-sm#v2.1.0:
-          env:
-            GITHUB_TOKEN: "buildkite-$BUILDKITE_PIPELINE_SLUG-github-token"
-            GEM_HOST_API_KEY: "buildkite-$BUILDKITE_PIPELINE_SLUG-gem-host-api-key"
-      - docker-compose#v3.7.0:
-          config: .buildkite/docker/docker-compose.yml
-          run: commitlint
-          env:
-            - CI
-            - GITHUB_TOKEN
-            - GEM_HOST_API_KEY
-            - BUILDKITE_BRANCH
