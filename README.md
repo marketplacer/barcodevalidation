@@ -63,6 +63,32 @@ bad.to_all_valid         # => []
 ```
 
 
+Custom GTINs
+------------
+
+If the standard GTINs provided are not enough for your needs, you can implement your own and register it.
+`BarcodeValidation::GTIN.gtin_classes` contains the ordered list of GTIN classes that are checked if they `handle?(input)`.
+Add your own class to the list, or remove default ones, to tailor it to your needs. For example:
+
+```ruby
+# A custom class that handles any length GTIN as long as it starts with "123".
+# Note that we must still provide a VALID_LENGTH to allow transcoding to other GTINs by zero-padding.
+class MyCustomGTIN < BarcodeValidation::GTIN::Base
+  VALID_LENGTH = 20
+
+  def self.handles?(input)
+    input.start_with?("123") && input.length <= VALID_LENGTH
+  end
+
+  # Custom validity check
+  def valid?
+    self.class.handles?(input) && check_digit.valid?
+  end
+end
+
+BarcodeValidation::GTIN.gtin_classes.unshift MyCustomGTIN
+```
+
 
 Development
 -----------

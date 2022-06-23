@@ -19,6 +19,14 @@ module BarcodeValidation
         BarcodeValidation::InvalidGTIN.new(input, error: e)
       end
 
+      # Does this class (potentially) handle a GTIN that matches the input?
+      # Subclasses can choose to implement their own logic. The default is to look at +VALID_LENGTH+ and use that to match the length of the input the class handles.
+      def self.handles?(input)
+        return false unless self.const_defined?(:VALID_LENGTH)
+
+        input.length == self::VALID_LENGTH
+      end
+
       def valid?
         valid_length == length && check_digit.valid?
       end

@@ -12,6 +12,8 @@ require_relative "gtin/gtin14"
 module BarcodeValidation
   module GTIN
     class << self
+      attr_accessor :gtin_classes
+
       def new(input)
         (class_for_input(input) || BarcodeValidation::InvalidGTIN).new(input)
       end
@@ -19,10 +21,10 @@ module BarcodeValidation
       private
 
       def class_for_input(input)
-        [GTIN8, GTIN12, GTIN13, GTIN14].find do |klass|
-          input.to_s.size == klass::VALID_LENGTH
-        end
+        input = input.to_s.freeze
+        gtin_classes.find { |klass| klass.handles?(input) }
       end
     end
+    self.gtin_classes = [GTIN8, GTIN12, GTIN13, GTIN14]
   end
 end
