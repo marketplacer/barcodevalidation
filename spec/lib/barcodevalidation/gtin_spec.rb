@@ -22,6 +22,10 @@ RSpec.describe BarcodeValidation::GTIN do
   context "with a UPC with an invalid check digit" do
     let(:input) { 123_456_789_011 }
     it { is_expected.to_not be_valid }
+
+    it "exposes the CheckDigit" do
+      expect(gtin.check_digit).to_not be_valid
+    end
   end
 
   context "with a sequence of digits of unknown length" do

@@ -56,11 +56,11 @@ module BarcodeValidation
         is_a?(GTIN14) ? self : transcode_to(GTIN14)
       end
 
-      private
-
       def check_digit
         CheckDigit.new(last, expected: expected_check_digit)
       end
+
+      private
 
       def expected_check_digit
         (MODULUS - weighted_checkable_digit_sum) % MODULUS
