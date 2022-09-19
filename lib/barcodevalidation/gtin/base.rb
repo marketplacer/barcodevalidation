@@ -27,6 +27,36 @@ module BarcodeValidation
         input.length == self::VALID_LENGTH
       end
 
+      # Upon inheritance, register the subclass so users of the library can dynamically add more GTINs in their own code.
+      def self.inherited(subclass)
+        return if BarcodeValidation::GTIN.prioritized_gtin_classes.include?(subclass)
+
+        BarcodeValidation::GTIN.prioritized_gtin_classes.push(subclass)
+
+        nil
+      end
+
+      # Ensure this class is earlier in the GTIN classes list than +other_gtin_class+ and thus will get asked earlier if it handles a GTIN.
+      def self.prioritize_before(other_gtin_class)
+        other_index = BarcodeValidation::GTIN.prioritized_gtin_classes.index(other_gtin_class)
+        raise ArgumentError, "The class you want to prioritize before is not a registered prioritized GTIN class." if other_index.nil?
+
+        BarcodeValidation::GTIN.prioritized_gtin_classes.delete(self)
+        BarcodeValidation::GTIN.prioritized_gtin_classes.insert(other_index, self)
+
+        nil
+      end
+
+      # This class is abstract and should not be included in the list of GTIN classes that actually implement a GTIN.
+      def self.abstract_class
+        BarcodeValidation::GTIN.prioritized_gtin_classes.delete(self)
+
+        nil
+      end
+
+      # GTIN::Base is an abstract class. See GTIN8/12/13/14 for implementations of actual GTINs.
+      abstract_class
+
       def valid?
         valid_length == length && check_digit.valid?
       end

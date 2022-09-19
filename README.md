@@ -66,13 +66,14 @@ bad.to_all_valid         # => []
 Custom GTINs
 ------------
 
-If the standard GTINs provided are not enough for your needs, you can implement your own and register it.
-`BarcodeValidation::GTIN.gtin_classes` contains the ordered list of GTIN classes that are checked if they `handle?(input)`.
-Add your own class to the list, or remove default ones, to tailor it to your needs. For example:
+If the standard GTINs provided are not enough for your needs, you can implement your own by subclassing `BarcodeValidation::GTIN::Base` or any of its subclasses. If your custom class overlaps with a default class or one of your other custom classes, you can declare `prioritize_before <other class>` to re-order their evaluation order.
+
+An example:
 
 ```ruby
 # A custom class that handles any length GTIN as long as it starts with "123".
 # Note that we must still provide a VALID_LENGTH to allow transcoding to other GTINs by zero-padding.
+# Due to this inheriting from Base, it is automatically registered and added to the end of the list of classes to check if it `handles?` an input.
 class MyCustomGTIN < BarcodeValidation::GTIN::Base
   VALID_LENGTH = 20
 
@@ -86,7 +87,20 @@ class MyCustomGTIN < BarcodeValidation::GTIN::Base
   end
 end
 
-BarcodeValidation::GTIN.gtin_classes.unshift MyCustomGTIN
+# A custom implementation of GTIN13, which addresses a subset of the GTIN13 range.
+class MyCustomGTIN13 < BarcodeValidation::GTIN::GTIN13
+  # Ensure we get a chance to handle GTINs before our parent,
+  # so we can handle the subset we care about and have our parent handle the rest.
+  prioritize_before BarcodeValidation::GTIN::GTIN13
+
+  def self.handles?(input)
+    input.start_with?("123") && super
+  end
+
+  def valid?
+    input.start_with?("123") && super
+  end
+end
 ```
 
 

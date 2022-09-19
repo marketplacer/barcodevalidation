@@ -2,29 +2,38 @@
 
 require "forwardable"
 require_relative "invalid_gtin"
-require_relative "gtin/base"
-require_relative "gtin/check_digit"
-require_relative "gtin/gtin8"
-require_relative "gtin/gtin12"
-require_relative "gtin/gtin13"
-require_relative "gtin/gtin14"
 
 module BarcodeValidation
   module GTIN
     class << self
-      attr_accessor :gtin_classes
-
       def new(input)
         (class_for_input(input) || BarcodeValidation::InvalidGTIN).new(input)
+      end
+
+      # Classes that inherit from GTIN::Base auto-register themselves here.
+      # Classes can prioritize themselves before others to implement subsets or other means of overlapping ranges.
+      #
+      # @api private Only for internal use.
+      # @see GTIN::Base.prioritize_before For when you want to manipulte priorities.
+      # @see GTIN::Base.abstract_class For when you want to make a GTIN class abstract (i.e. not included in this list)
+      def prioritized_gtin_classes
+        @prioritized_gtin_classes ||= []
       end
 
       private
 
       def class_for_input(input)
         input = input.to_s.freeze
-        gtin_classes.find { |klass| klass.handles?(input) }
+        prioritized_gtin_classes.find { |klass| klass.handles?(input) }
       end
     end
-    self.gtin_classes = [GTIN8, GTIN12, GTIN13, GTIN14]
   end
 end
+
+# Load GTIN implementations after we have our registration setup
+require_relative "gtin/base"
+require_relative "gtin/check_digit"
+require_relative "gtin/gtin8"
+require_relative "gtin/gtin12"
+require_relative "gtin/gtin13"
+require_relative "gtin/gtin14"
