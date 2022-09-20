@@ -20,6 +20,14 @@ module BarcodeValidation
         @prioritized_gtin_classes ||= []
       end
 
+      # Adds the provided class to the back of the list of prioritized GTIN classes.
+      def append_gtin_class(gtin_class)
+        return if prioritized_gtin_classes.include?(gtin_class)
+
+        prioritized_gtin_classes.push(gtin_class)
+        nil
+      end
+
       # Ensure the provided class is removed from the list of prioritized GTIN classes.
       def remove_gtin_class(gtin_class)
         prioritized_gtin_classes.delete(gtin_class)

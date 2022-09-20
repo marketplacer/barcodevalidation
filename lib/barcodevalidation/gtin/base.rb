@@ -29,11 +29,7 @@ module BarcodeValidation
 
       # Upon inheritance, register the subclass so users of the library can dynamically add more GTINs in their own code.
       def self.inherited(subclass)
-        return if BarcodeValidation::GTIN.prioritized_gtin_classes.include?(subclass)
-
-        BarcodeValidation::GTIN.prioritized_gtin_classes.push(subclass)
-
-        nil
+        BarcodeValidation::GTIN.append_gtin_class(subclass)
       end
 
       # Ensure this class is earlier in the GTIN classes list than +other_gtin_class+ and thus will get asked earlier if it handles a GTIN.
