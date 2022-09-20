@@ -4,6 +4,9 @@ require "forwardable"
 require_relative "invalid_gtin"
 
 module BarcodeValidation
+  # GTIN is responsible for wrapping input in an appropriate GTIN::Base sub-class.
+  # An important part of this involves managing the prioritized list of GTIN classes we use for handling input.
+  # The methods implemented here are used by GTIN::Base to manage this list and prioritize classes.
   module GTIN
     class << self
       def new(input)
@@ -14,7 +17,7 @@ module BarcodeValidation
       # Classes can prioritize themselves before others to implement subsets or other means of overlapping ranges.
       #
       # @api private Only for internal use.
-      # @see GTIN::Base.prioritize_before For when you want to manipulte priorities.
+      # @see GTIN::Base.prioritize_before For when you want to manipulate priorities.
       # @see GTIN::Base.abstract_class For when you want to make a GTIN class abstract (i.e. not included in this list)
       def prioritized_gtin_classes
         @prioritized_gtin_classes ||= []
