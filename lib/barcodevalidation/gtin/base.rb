@@ -34,13 +34,9 @@ module BarcodeValidation
 
       # Ensure this class is earlier in the GTIN classes list than +other_gtin_class+ and thus will get asked earlier if it handles a GTIN.
       def self.prioritize_before(other_gtin_class)
-        other_index = BarcodeValidation::GTIN.prioritized_gtin_classes.index(other_gtin_class)
-        raise ArgumentError, "The class you want to prioritize before is not a registered prioritized GTIN class." if other_index.nil?
+        raise ArgumentError, "The class you want to prioritize before is not a registered prioritized GTIN class." unless GTIN.gtin_class?(other_gtin_class)
 
-        BarcodeValidation::GTIN.remove_gtin_class(self)
-        BarcodeValidation::GTIN.prioritized_gtin_classes.insert(other_index, self)
-
-        nil
+        GTIN.reprioritize_before(self, other_gtin_class)
       end
 
       # This class is abstract and should not be included in the list of GTIN classes that actually implement a GTIN.

@@ -22,7 +22,7 @@ module BarcodeValidation
 
       # Adds the provided class to the back of the list of prioritized GTIN classes.
       def append_gtin_class(gtin_class)
-        return if prioritized_gtin_classes.include?(gtin_class)
+        return if gtin_class?(gtin_class)
 
         prioritized_gtin_classes.push(gtin_class)
         nil
@@ -31,6 +31,21 @@ module BarcodeValidation
       # Ensure the provided class is removed from the list of prioritized GTIN classes.
       def remove_gtin_class(gtin_class)
         prioritized_gtin_classes.delete(gtin_class)
+        nil
+      end
+
+      # Is this a registered prioritized GTIN class?
+      # @return [true, false]
+      def gtin_class?(gtin_class)
+        prioritized_gtin_classes.include?(gtin_class)
+      end
+
+      # @param [Class] high_priority_class The higher priority GTIN class you want to move before the low priority class
+      # @param [Class] low_priority_class The low priority GTIN class that the high priority one is moved before
+      def reprioritize_before(high_priority_class, low_priority_class)
+        low_priority_index = prioritized_gtin_classes.index(low_priority_class)
+        remove_gtin_class(high_priority_class)
+        prioritized_gtin_classes.insert(low_priority_index, high_priority_class)
         nil
       end
 
