@@ -13,16 +13,6 @@ module BarcodeValidation
         (class_for_input(input) || BarcodeValidation::InvalidGTIN).new(input)
       end
 
-      # Classes that inherit from GTIN::Base auto-register themselves here.
-      # Classes can prioritize themselves before others to implement subsets or other means of overlapping ranges.
-      #
-      # @api private Only for internal use.
-      # @see GTIN::Base.prioritize_before For when you want to manipulate priorities.
-      # @see GTIN::Base.abstract_class For when you want to make a GTIN class abstract (i.e. not included in this list)
-      def prioritized_gtin_classes
-        @prioritized_gtin_classes ||= []
-      end
-
       # Adds the provided class to the back of the list of prioritized GTIN classes.
       def append_gtin_class(gtin_class)
         return if gtin_class?(gtin_class)
@@ -53,6 +43,10 @@ module BarcodeValidation
       end
 
       private
+
+      def prioritized_gtin_classes
+        @prioritized_gtin_classes ||= []
+      end
 
       def class_for_input(input)
         input = input.to_s.freeze
