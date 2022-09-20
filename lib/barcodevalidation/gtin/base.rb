@@ -41,7 +41,7 @@ module BarcodeValidation
         other_index = BarcodeValidation::GTIN.prioritized_gtin_classes.index(other_gtin_class)
         raise ArgumentError, "The class you want to prioritize before is not a registered prioritized GTIN class." if other_index.nil?
 
-        BarcodeValidation::GTIN.prioritized_gtin_classes.delete(self)
+        BarcodeValidation::GTIN.remove_gtin_class(self)
         BarcodeValidation::GTIN.prioritized_gtin_classes.insert(other_index, self)
 
         nil
@@ -49,9 +49,7 @@ module BarcodeValidation
 
       # This class is abstract and should not be included in the list of GTIN classes that actually implement a GTIN.
       def self.abstract_class
-        BarcodeValidation::GTIN.prioritized_gtin_classes.delete(self)
-
-        nil
+        BarcodeValidation::GTIN.remove_gtin_class(self)
       end
 
       # GTIN::Base is an abstract class. See GTIN8/12/13/14 for implementations of actual GTINs.
