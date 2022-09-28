@@ -19,6 +19,34 @@ module BarcodeValidation
         BarcodeValidation::InvalidGTIN.new(input, error: e)
       end
 
+      # Does this class (potentially) handle a GTIN that matches the input?
+      # Subclasses can choose to implement their own logic. The default is to look at +VALID_LENGTH+ and use that to match the length of the input the class handles.
+      def self.handles?(input)
+        return false unless self.const_defined?(:VALID_LENGTH)
+
+        input.length == self::VALID_LENGTH
+      end
+
+      # Upon inheritance, register the subclass so users of the library can dynamically add more GTINs in their own code.
+      def self.inherited(subclass)
+        BarcodeValidation::GTIN.append_gtin_class(subclass)
+      end
+
+      # Ensure this class is earlier in the GTIN classes list than +other_gtin_class+ and thus will get asked earlier if it handles a GTIN.
+      def self.prioritize_before(other_gtin_class)
+        raise ArgumentError, "The class you want to prioritize before is not a registered prioritized GTIN class." unless GTIN.gtin_class?(other_gtin_class)
+
+        GTIN.reprioritize_before(self, other_gtin_class)
+      end
+
+      # This class is abstract and should not be included in the list of GTIN classes that actually implement a GTIN.
+      def self.abstract_class
+        BarcodeValidation::GTIN.remove_gtin_class(self)
+      end
+
+      # GTIN::Base is an abstract class. See GTIN8/12/13/14 for implementations of actual GTINs.
+      abstract_class
+
       def valid?
         valid_length == length && check_digit.valid?
       end

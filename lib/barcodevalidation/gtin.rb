@@ -2,27 +2,64 @@
 
 require "forwardable"
 require_relative "invalid_gtin"
-require_relative "gtin/base"
-require_relative "gtin/check_digit"
-require_relative "gtin/gtin8"
-require_relative "gtin/gtin12"
-require_relative "gtin/gtin13"
-require_relative "gtin/gtin14"
 
 module BarcodeValidation
+  # GTIN is responsible for wrapping input in an appropriate GTIN::Base sub-class.
+  # An important part of this involves managing the prioritized list of GTIN classes we use for handling input.
+  # The methods implemented here are used by GTIN::Base to manage this list and prioritize classes.
   module GTIN
     class << self
       def new(input)
         (class_for_input(input) || BarcodeValidation::InvalidGTIN).new(input)
       end
 
+      # Adds the provided class to the back of the list of prioritized GTIN classes.
+      def append_gtin_class(gtin_class)
+        return if gtin_class?(gtin_class)
+
+        prioritized_gtin_classes.push(gtin_class)
+        nil
+      end
+
+      # Ensure the provided class is removed from the list of prioritized GTIN classes.
+      def remove_gtin_class(gtin_class)
+        prioritized_gtin_classes.delete(gtin_class)
+        nil
+      end
+
+      # Is this a registered prioritized GTIN class?
+      # @return [true, false]
+      def gtin_class?(gtin_class)
+        prioritized_gtin_classes.include?(gtin_class)
+      end
+
+      # @param [Class] high_priority_class The higher priority GTIN class you want to move before the low priority class
+      # @param [Class] low_priority_class The low priority GTIN class that the high priority one is moved before
+      def reprioritize_before(high_priority_class, low_priority_class)
+        low_priority_index = prioritized_gtin_classes.index(low_priority_class)
+        remove_gtin_class(high_priority_class)
+        prioritized_gtin_classes.insert(low_priority_index, high_priority_class)
+        nil
+      end
+
       private
 
+      def prioritized_gtin_classes
+        @prioritized_gtin_classes ||= []
+      end
+
       def class_for_input(input)
-        [GTIN8, GTIN12, GTIN13, GTIN14].find do |klass|
-          input.to_s.size == klass::VALID_LENGTH
-        end
+        input = input.to_s.freeze
+        prioritized_gtin_classes.find { |klass| klass.handles?(input) }
       end
     end
   end
 end
+
+# Load GTIN implementations after we have our registration setup
+require_relative "gtin/base"
+require_relative "gtin/check_digit"
+require_relative "gtin/gtin8"
+require_relative "gtin/gtin12"
+require_relative "gtin/gtin13"
+require_relative "gtin/gtin14"

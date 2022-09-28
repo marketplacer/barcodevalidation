@@ -115,4 +115,75 @@ RSpec.describe BarcodeValidation::GTIN do
       end
     end
   end
+
+  describe "custom classes" do
+    after(:each) do
+      # Remove references to classes we may have generated during a test to ensure we don't pollute the list of classes for other tests
+      classes_to_cleanup.each do |class_sym|
+        next unless Object.const_defined?(class_sym)
+
+        class_obj = Object.const_get(class_sym)
+        BarcodeValidation::GTIN.remove_gtin_class(class_obj)
+        Object.send(:remove_const, class_sym)
+      end
+    end
+
+    describe "inheritance" do
+      let(:classes_to_cleanup) { [:MyCustomGTIN] }
+
+      it "appends itself to BarcodeValidation::GTIN.prioritized_gtin_classes when inheriting from GTIN::Base" do
+        class MyCustomGTIN < BarcodeValidation::GTIN::Base
+        end
+
+        expect(BarcodeValidation::GTIN.gtin_class?(MyCustomGTIN)).to eq(true)
+      end
+
+      it "appends itself to BarcodeValidation::GTIN.prioritized_gtin_classes when inheriting from a GTIN::Base descendant" do
+        class MyCustomGTIN < BarcodeValidation::GTIN::GTIN12
+        end
+
+        expect(BarcodeValidation::GTIN.gtin_class?(MyCustomGTIN)).to eq(true)
+      end
+    end
+
+    describe "prioritize_before" do
+      let(:classes_to_cleanup) { [:MyCustomGTIN13] }
+
+      it "causes this class to be evaluated before the other one when checking which one handles a GTIN input" do
+        class MyCustomGTIN13 < BarcodeValidation::GTIN::GTIN13
+          prioritize_before BarcodeValidation::GTIN::GTIN13
+
+          def self.handles?(input)
+            input.start_with?("123") && super
+          end
+        end
+
+        expect(BarcodeValidation::GTIN.new("1234567890123").class).to eq(MyCustomGTIN13)
+        expect(BarcodeValidation::GTIN.new("1004567890123").class).to eq(BarcodeValidation::GTIN::GTIN13)
+      end
+    end
+
+    describe "abstract_class" do
+      let(:classes_to_cleanup) { %i[MyCustomAbstractGTIN MyCustomParentGTIN MyCustomChildGTIN] }
+
+      it "removes itself from BarcodeValidation::GTIN.prioritized_gtin_classes" do
+        class MyCustomAbstractGTIN < BarcodeValidation::GTIN::Base
+          abstract_class
+        end
+
+        expect(BarcodeValidation::GTIN.gtin_class?(MyCustomAbstractGTIN)).to eq(false)
+      end
+
+      it "is not inherited by children" do
+        class MyCustomParentGTIN < BarcodeValidation::GTIN::Base
+          abstract_class
+        end
+
+        class MyCustomChildGTIN < MyCustomParentGTIN
+        end
+
+        expect(BarcodeValidation::GTIN.gtin_class?(MyCustomChildGTIN)).to eq(true)
+      end
+    end
+  end
 end
