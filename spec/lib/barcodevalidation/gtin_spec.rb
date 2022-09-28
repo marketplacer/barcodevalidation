@@ -124,7 +124,7 @@ RSpec.describe BarcodeValidation::GTIN do
 
         class_obj = Object.const_get(class_sym)
         BarcodeValidation::GTIN.remove_gtin_class(class_obj)
-        Object.send(:remove_const, class_sym)
+        Object.__send__(:remove_const, class_sym)
       end
     end
 

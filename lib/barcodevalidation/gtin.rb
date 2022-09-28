@@ -15,9 +15,7 @@ module BarcodeValidation
 
       # Adds the provided class to the back of the list of prioritized GTIN classes.
       def append_gtin_class(gtin_class)
-        return if gtin_class?(gtin_class)
-
-        prioritized_gtin_classes.push(gtin_class)
+        prioritized_gtin_classes.push(gtin_class) unless gtin_class?(gtin_class)
         nil
       end
 
