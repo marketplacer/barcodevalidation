@@ -1,19 +1,5 @@
 ---
 steps:
-  - name: ':ruby: 2.5 tests'
-    plugins:
-      - docker-compose#v3.7.0:
-          config: .buildkite/docker/docker-compose.yml
-          run: test
-          args:
-            RUBY_VERSION=2.5
-  - name: ':ruby: 2.6 tests'
-    plugins:
-      - docker-compose#v3.7.0:
-          config: .buildkite/docker/docker-compose.yml
-          run: test
-          args:
-            RUBY_VERSION=2.6
   - name: ':ruby: 2.7 tests'
     plugins:
       - docker-compose#v3.7.0:
@@ -35,3 +21,10 @@ steps:
           run: test
           args:
             RUBY_VERSION=3.1
+  - name: ':ruby: 3.2 tests'
+    plugins:
+      - docker-compose#v3.7.0:
+          config: .buildkite/docker/docker-compose.yml
+          run: test
+          args:
+            RUBY_VERSION=3.2
