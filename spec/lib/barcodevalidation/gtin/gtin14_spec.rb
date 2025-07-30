@@ -9,12 +9,12 @@ require "barcodevalidation/gtin"
 RSpec.describe BarcodeValidation::GTIN::GTIN14 do
   subject(:gtin) { described_class.new(input) }
 
-  context "#valid?" do
-    context "whith a valid 8-digit code" do
+  describe "#valid?" do
+    context "with a valid 8-digit code" do
       let(:input) { "12345670" }
 
       it "is false" do
-        expect(gtin).to_not be_valid
+        expect(gtin).not_to be_valid
       end
     end
 
@@ -22,7 +22,7 @@ RSpec.describe BarcodeValidation::GTIN::GTIN14 do
       let(:input) { "123456789012" }
 
       it "is false" do
-        expect(gtin).to_not be_valid
+        expect(gtin).not_to be_valid
       end
     end
 
@@ -30,7 +30,7 @@ RSpec.describe BarcodeValidation::GTIN::GTIN14 do
       let(:input) { "1234567890128" }
 
       it "is false" do
-        expect(gtin).to_not be_valid
+        expect(gtin).not_to be_valid
       end
     end
 
@@ -43,9 +43,9 @@ RSpec.describe BarcodeValidation::GTIN::GTIN14 do
     end
   end
 
-  context "converstion" do
+  context "conversion" do
     before do
-      expect(gtin.is_a?(described_class)).to be_truthy
+      expect(gtin).to be_a(described_class)
       expect(gtin).to be_valid
     end
 
@@ -60,7 +60,7 @@ RSpec.describe BarcodeValidation::GTIN::GTIN14 do
         end
 
         it "is a BarcodeValidation::GTIN::GTIN8" do
-          expect(gtin8.is_a?(BarcodeValidation::GTIN::GTIN8)).to be_truthy
+          expect(gtin8).to be_a(BarcodeValidation::GTIN::GTIN8)
         end
       end
 
@@ -68,11 +68,11 @@ RSpec.describe BarcodeValidation::GTIN::GTIN14 do
         let(:input) { "12345678901231" }
 
         it "not valid" do
-          expect(gtin8).to_not be_valid
+          expect(gtin8).not_to be_valid
         end
 
         it "is a BarcodeValidation::InvalidGTIN" do
-          expect(gtin8.is_a?(BarcodeValidation::InvalidGTIN)).to be_truthy
+          expect(gtin8).to be_a(BarcodeValidation::InvalidGTIN)
         end
       end
     end
@@ -88,7 +88,7 @@ RSpec.describe BarcodeValidation::GTIN::GTIN14 do
         end
 
         it "is a BarcodeValidation::GTIN::GTIN12" do
-          expect(gtin12.is_a?(BarcodeValidation::GTIN::GTIN12)).to be_truthy
+          expect(gtin12).to be_a(BarcodeValidation::GTIN::GTIN12)
         end
       end
 
@@ -96,20 +96,17 @@ RSpec.describe BarcodeValidation::GTIN::GTIN14 do
         let(:input) { "12345678901231" }
 
         it "is not valid" do
-          expect(gtin12).to_not be_valid
+          expect(gtin12).not_to be_valid
         end
 
         it "is a BarcodeValidation::InvalidGTIN" do
-          expect(gtin12.is_a?(BarcodeValidation::InvalidGTIN)).to be_truthy
+          expect(gtin12).to be_a(BarcodeValidation::InvalidGTIN)
         end
       end
     end
 
     context "to GTIN-13" do
       let(:gtin13) { gtin.to_gtin_13 }
-
-      before do
-      end
 
       context "when prefixed with zeros" do
         let(:input) { "00123456789012" }
@@ -119,7 +116,7 @@ RSpec.describe BarcodeValidation::GTIN::GTIN14 do
         end
 
         it "is a BarcodeValidation::GTIN::GTIN13" do
-          expect(gtin13.is_a?(BarcodeValidation::GTIN::GTIN13)).to be_truthy
+          expect(gtin13).to be_a(BarcodeValidation::GTIN::GTIN13)
         end
       end
 
@@ -127,11 +124,11 @@ RSpec.describe BarcodeValidation::GTIN::GTIN14 do
         let(:input) { "12345678901231" }
 
         it "is not valid" do
-          expect(gtin13).to_not be_valid
+          expect(gtin13).not_to be_valid
         end
 
         it "is a BarcodeValidation::InvalidGTIN" do
-          expect(gtin13.is_a?(BarcodeValidation::InvalidGTIN)).to be_truthy
+          expect(gtin13).to be_a(BarcodeValidation::InvalidGTIN)
         end
       end
     end
@@ -149,7 +146,7 @@ RSpec.describe BarcodeValidation::GTIN::GTIN14 do
         let(:input) { "00000012345670" }
 
         it "includes a GTIN-8 instance" do
-          expect(gtin.to_all_valid.any? { |code| code.is_a?(BarcodeValidation::GTIN::GTIN8) }).to be_truthy
+          expect(gtin.to_all_valid).to be_any { |code| code.is_a?(BarcodeValidation::GTIN::GTIN8) }
         end
       end
 
@@ -157,7 +154,7 @@ RSpec.describe BarcodeValidation::GTIN::GTIN14 do
         let(:input) { "00123456789012" }
 
         it "includes a GTIN-12 instance" do
-          expect(gtin.to_all_valid.any? { |code| code.is_a?(BarcodeValidation::GTIN::GTIN12) }).to be_truthy
+          expect(gtin.to_all_valid).to be_any { |code| code.is_a?(BarcodeValidation::GTIN::GTIN12) }
         end
       end
 
@@ -165,7 +162,7 @@ RSpec.describe BarcodeValidation::GTIN::GTIN14 do
         let(:input) { "01234567890128" }
 
         it "includes a GTIN-13 instance" do
-          expect(gtin.to_all_valid.any? { |code| code.is_a?(BarcodeValidation::GTIN::GTIN13) }).to be_truthy
+          expect(gtin.to_all_valid).to be_any { |code| code.is_a?(BarcodeValidation::GTIN::GTIN13) }
         end
       end
 
@@ -173,19 +170,19 @@ RSpec.describe BarcodeValidation::GTIN::GTIN14 do
         let(:input) { "12345678901231" }
 
         it "does not includes a GTIN-8 instance" do
-          expect(gtin.to_all_valid.none? { |code| code.is_a?(BarcodeValidation::GTIN::GTIN8) }).to be_truthy
+          expect(gtin.to_all_valid).to be_none { |code| code.is_a?(BarcodeValidation::GTIN::GTIN8) }
         end
 
         it "does not includes a GTIN-12 instance" do
-          expect(gtin.to_all_valid.none? { |code| code.is_a?(BarcodeValidation::GTIN::GTIN12) }).to be_truthy
+          expect(gtin.to_all_valid).to be_none { |code| code.is_a?(BarcodeValidation::GTIN::GTIN12) }
         end
 
         it "does not include a GTIN-13 instance" do
-          expect(gtin.to_all_valid.none? { |code| code.is_a?(BarcodeValidation::GTIN::GTIN13) }).to be_truthy
+          expect(gtin.to_all_valid).to be_none { |code| code.is_a?(BarcodeValidation::GTIN::GTIN13) }
         end
 
         it "includes a GTIN-14 instance" do
-          expect(gtin.to_all_valid.any? { |code| code.is_a?(BarcodeValidation::GTIN::GTIN14) }).to be_truthy
+          expect(gtin.to_all_valid).to be_any { |code| code.is_a?(described_class) }
         end
       end
     end

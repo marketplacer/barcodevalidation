@@ -28,3 +28,8 @@ steps:
           run: test
           args:
             RUBY_VERSION=3.4
+  - name: ':broom: standardrb'
+    plugins:
+      - docker-compose#v3.7.0:
+          config: .buildkite/docker/docker-compose.yml
+          run: standardrb

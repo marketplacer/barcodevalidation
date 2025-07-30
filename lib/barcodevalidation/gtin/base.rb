@@ -30,11 +30,15 @@ module BarcodeValidation
       # Upon inheritance, register the subclass so users of the library can dynamically add more GTINs in their own code.
       def self.inherited(subclass)
         BarcodeValidation::GTIN.append_gtin_class(subclass)
+        super
       end
 
       # Ensure this class is earlier in the GTIN classes list than +other_gtin_class+ and thus will get asked earlier if it handles a GTIN.
       def self.prioritize_before(other_gtin_class)
-        raise ArgumentError, "The class you want to prioritize before is not a registered prioritized GTIN class." unless GTIN.gtin_class?(other_gtin_class)
+        unless GTIN.gtin_class?(other_gtin_class)
+          raise ArgumentError,
+            "The class you want to prioritize before is not a registered prioritized GTIN class."
+        end
 
         GTIN.reprioritize_before(self, other_gtin_class)
       end
@@ -52,7 +56,12 @@ module BarcodeValidation
       end
 
       def valid_length
-        raise(AbstractMethodError, "Concrete classes must define the VALID_LENGTH constant") unless self.class.const_defined?(:VALID_LENGTH)
+        unless self.class.const_defined?(:VALID_LENGTH)
+          raise(
+            AbstractMethodError,
+            "Concrete classes must define the VALID_LENGTH constant"
+          )
+        end
 
         self.class::VALID_LENGTH
       end
@@ -64,7 +73,7 @@ module BarcodeValidation
           to_gtin_8,
           to_gtin_12,
           to_gtin_13,
-          to_gtin_14,
+          to_gtin_14
         ].select(&:valid?)
       end
 
@@ -119,7 +128,7 @@ module BarcodeValidation
         else
           BarcodeValidation::InvalidGTIN.new(
             input,
-            error: klass::ConversionError.new(klass).exception(input),
+            error: klass::ConversionError.new(klass).exception(input)
           )
         end
       end

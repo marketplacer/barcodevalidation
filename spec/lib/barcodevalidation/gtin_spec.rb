@@ -11,37 +11,44 @@ RSpec.describe BarcodeValidation::GTIN do
 
   context "with a valid UPC" do
     let(:input) { 123_456_789_012 }
+
     it { is_expected.to be_valid }
   end
 
   context "with a valid UPC where the check digit is 0" do
     let(:input) { 123_456_789_050 }
+
     it { is_expected.to be_valid }
   end
 
   context "with a UPC with an invalid check digit" do
     let(:input) { 123_456_789_011 }
-    it { is_expected.to_not be_valid }
+
+    it { is_expected.not_to be_valid }
 
     it "exposes the CheckDigit" do
-      expect(gtin.check_digit).to_not be_valid
+      expect(gtin.check_digit).not_to be_valid
     end
   end
 
   context "with a sequence of digits of unknown length" do
     let(:input) { 123_456_789_012_345_678 }
-    it { is_expected.to_not be_valid }
+
+    it { is_expected.not_to be_valid }
   end
 
   context "with a non-numeric input" do
     let(:input) { "abcdef" }
-    it { is_expected.to_not be_valid }
+
+    it { is_expected.not_to be_valid }
   end
 
   describe "sequence methods" do
-    let(:input) { 12_345_678 }
     subject(:sequence) { gtin.reverse }
-    it { is_expected.to_not be_a described_class }
+
+    let(:input) { 12_345_678 }
+
+    it { is_expected.not_to be_a described_class }
   end
 
   describe "factory interface" do
@@ -49,7 +56,7 @@ RSpec.describe BarcodeValidation::GTIN do
       let(:input) { "12345678" }
 
       it "constructs a BarcodeValidation::GTIN::GTIN8" do
-        expect(gtin.is_a?(BarcodeValidation::GTIN::GTIN8)).to be_truthy
+        expect(gtin).to be_a(BarcodeValidation::GTIN::GTIN8)
       end
     end
 
@@ -57,7 +64,7 @@ RSpec.describe BarcodeValidation::GTIN do
       let(:input) { "123456789012" }
 
       it "constructs a BarcodeValidation::GTIN::GTIN12" do
-        expect(gtin.is_a?(BarcodeValidation::GTIN::GTIN12)).to be_truthy
+        expect(gtin).to be_a(BarcodeValidation::GTIN::GTIN12)
       end
     end
 
@@ -65,7 +72,7 @@ RSpec.describe BarcodeValidation::GTIN do
       let(:input) { "1234567890123" }
 
       it "constructs a BarcodeValidation::GTIN::GTIN13" do
-        expect(gtin.is_a?(BarcodeValidation::GTIN::GTIN13)).to be_truthy
+        expect(gtin).to be_a(BarcodeValidation::GTIN::GTIN13)
       end
     end
 
@@ -73,7 +80,7 @@ RSpec.describe BarcodeValidation::GTIN do
       let(:input) { "12345678901234" }
 
       it "constructs a BarcodeValidation::GTIN::GTIN14" do
-        expect(gtin.is_a?(BarcodeValidation::GTIN::GTIN14)).to be_truthy
+        expect(gtin).to be_a(BarcodeValidation::GTIN::GTIN14)
       end
     end
 
@@ -81,7 +88,7 @@ RSpec.describe BarcodeValidation::GTIN do
       let(:input) { "1234" }
 
       it "constructs a BarcodeValidation::InvalidGTIN" do
-        expect(gtin.is_a?(BarcodeValidation::InvalidGTIN)).to be_truthy
+        expect(gtin).to be_a(BarcodeValidation::InvalidGTIN)
       end
     end
   end
@@ -94,7 +101,7 @@ RSpec.describe BarcodeValidation::GTIN do
         let(:input) { "000012345670" }
 
         it "returns an instance of the concrete class for that subset" do
-          expect(gtin8.is_a?(BarcodeValidation::GTIN::GTIN8)).to be_truthy
+          expect(gtin8).to be_a(BarcodeValidation::GTIN::GTIN8)
         end
       end
 
@@ -117,40 +124,36 @@ RSpec.describe BarcodeValidation::GTIN do
   end
 
   describe "custom classes" do
-    after(:each) do
-      # Remove references to classes we may have generated during a test to ensure we don't pollute the list of classes for other tests
-      classes_to_cleanup.each do |class_sym|
-        next unless Object.const_defined?(class_sym)
-
-        class_obj = Object.const_get(class_sym)
-        BarcodeValidation::GTIN.remove_gtin_class(class_obj)
-        Object.__send__(:remove_const, class_sym)
-      end
-    end
-
     describe "inheritance" do
-      let(:classes_to_cleanup) { [:MyCustomGTIN] }
+      context "MyCustomGTIN" do
+        before do
+          klass = Class.new(BarcodeValidation::GTIN::Base) do
+          end
 
-      it "appends itself to BarcodeValidation::GTIN.prioritized_gtin_classes when inheriting from GTIN::Base" do
-        class MyCustomGTIN < BarcodeValidation::GTIN::Base
+          stub_const("MyCustomGTIN", klass)
         end
 
-        expect(BarcodeValidation::GTIN.gtin_class?(MyCustomGTIN)).to eq(true)
+        it "appends itself to BarcodeValidation::GTIN.prioritized_gtin_classes when inheriting from GTIN::Base" do
+          expect(described_class.gtin_class?(MyCustomGTIN)).to be(true)
+        end
       end
 
-      it "appends itself to BarcodeValidation::GTIN.prioritized_gtin_classes when inheriting from a GTIN::Base descendant" do
-        class MyCustomGTIN < BarcodeValidation::GTIN::GTIN12
+      context "MyCustomGTIN12" do
+        before do
+          klass = Class.new(BarcodeValidation::GTIN::GTIN12) do
+          end
+          stub_const("MyCustomGTIN", klass)
         end
 
-        expect(BarcodeValidation::GTIN.gtin_class?(MyCustomGTIN)).to eq(true)
+        it "appends itself to BarcodeValidation::GTIN.prioritized_gtin_classes when inheriting from a GTIN::Base descendant" do
+          expect(described_class.gtin_class?(MyCustomGTIN)).to be(true)
+        end
       end
     end
 
     describe "prioritize_before" do
-      let(:classes_to_cleanup) { [:MyCustomGTIN13] }
-
-      it "causes this class to be evaluated before the other one when checking which one handles a GTIN input" do
-        class MyCustomGTIN13 < BarcodeValidation::GTIN::GTIN13
+      before do
+        klass = Class.new(BarcodeValidation::GTIN::GTIN13) do
           prioritize_before BarcodeValidation::GTIN::GTIN13
 
           def self.handles?(input)
@@ -158,31 +161,37 @@ RSpec.describe BarcodeValidation::GTIN do
           end
         end
 
-        expect(BarcodeValidation::GTIN.new("1234567890123").class).to eq(MyCustomGTIN13)
-        expect(BarcodeValidation::GTIN.new("1004567890123").class).to eq(BarcodeValidation::GTIN::GTIN13)
+        stub_const("MyCustomGTIN13", klass)
+      end
+
+      it "causes this class to be evaluated before the other one when checking which one handles a GTIN input" do
+        expect(described_class.new("1234567890123").class).to eq(MyCustomGTIN13)
+        expect(described_class.new("1004567890123").class).to eq(BarcodeValidation::GTIN::GTIN13)
       end
     end
 
     describe "abstract_class" do
-      let(:classes_to_cleanup) { %i[MyCustomAbstractGTIN MyCustomParentGTIN MyCustomChildGTIN] }
-
-      it "removes itself from BarcodeValidation::GTIN.prioritized_gtin_classes" do
-        class MyCustomAbstractGTIN < BarcodeValidation::GTIN::Base
+      before do
+        klass = Class.new(BarcodeValidation::GTIN::Base) do
           abstract_class
         end
-
-        expect(BarcodeValidation::GTIN.gtin_class?(MyCustomAbstractGTIN)).to eq(false)
+        stub_const("MyCustomAbstractGTIN", klass)
       end
 
-      it "is not inherited by children" do
-        class MyCustomParentGTIN < BarcodeValidation::GTIN::Base
-          abstract_class
+      it "removes itself from BarcodeValidation::GTIN.prioritized_gtin_classes" do
+        expect(described_class.gtin_class?(MyCustomAbstractGTIN)).to be(false)
+      end
+
+      context "child class" do
+        before do
+          klass = Class.new(MyCustomAbstractGTIN) do
+          end
+          stub_const("MyCustomChildGTIN", klass)
         end
 
-        class MyCustomChildGTIN < MyCustomParentGTIN
+        it "is not inherited by children" do
+          expect(described_class.gtin_class?(MyCustomChildGTIN)).to be(true)
         end
-
-        expect(BarcodeValidation::GTIN.gtin_class?(MyCustomChildGTIN)).to eq(true)
       end
     end
   end

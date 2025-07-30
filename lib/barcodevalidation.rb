@@ -34,7 +34,7 @@ module BarcodeValidation
     include Error
 
     def initialize(input)
-      super "Invalid GTIN #{input.inspect}"
+      super("Invalid GTIN #{input.inspect}")
     end
   end
 end

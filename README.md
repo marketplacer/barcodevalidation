@@ -134,11 +134,10 @@ bin/rake
 
 #### Code Quality Checks
 
-Rubocop is used to enforce coding standards.
+[StandardRB](https://github.com/standardrb/standard) is used to enforce coding standards.
 
 ```
-bin/rubocop
-bin/rubocop --help
+bin/standardrb
 ```
 
 
@@ -163,7 +162,7 @@ Gem, created using `bundler gem barcodevalidation`.
     * `bundle`: Runs Bundler, in the correct way
     * `console`: development console (equiv. to `bin/bundle exec pry`)
     * `rake`: Runs Rake (equivalent to `bin/bundle exec rake`)
-    * `rubocop`: Runs Rubocop (equivalent to `bin/bundle exec rubocop`)
+    * `standardrb`: Runs standardrb (equivalent to `bin/bundle exec standardrb`)
     * `setup`: Sets up the project to be ready for development
 * `config/boot.rb`: Prepares dependencies before loading the library
 * `lib/`: Source files; this directory is added to Ruby's load path

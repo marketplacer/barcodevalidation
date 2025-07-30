@@ -9,8 +9,8 @@ require "barcodevalidation/gtin"
 RSpec.describe BarcodeValidation::GTIN::GTIN8 do
   subject(:gtin) { described_class.new(input) }
 
-  context "#valid?" do
-    context "whith a valid 8-digit code" do
+  describe "#valid?" do
+    context "with a valid 8-digit code" do
       let(:input) { "12345670" }
 
       it "is true" do
@@ -22,7 +22,7 @@ RSpec.describe BarcodeValidation::GTIN::GTIN8 do
       let(:input) { "123456789012" }
 
       it "is false" do
-        expect(gtin).to_not be_valid
+        expect(gtin).not_to be_valid
       end
     end
 
@@ -30,7 +30,7 @@ RSpec.describe BarcodeValidation::GTIN::GTIN8 do
       let(:input) { "1234567890128" }
 
       it "is false" do
-        expect(gtin).to_not be_valid
+        expect(gtin).not_to be_valid
       end
     end
 
@@ -38,16 +38,16 @@ RSpec.describe BarcodeValidation::GTIN::GTIN8 do
       let(:input) { "12345678901231" }
 
       it "is false" do
-        expect(gtin).to_not be_valid
+        expect(gtin).not_to be_valid
       end
     end
   end
 
-  context "converstion" do
+  context "conversion" do
     let(:input) { "12345670" }
 
     before do
-      expect(gtin.is_a?(described_class)).to be_truthy
+      expect(gtin).to be_a(described_class)
       expect(gtin).to be_valid
     end
 
@@ -61,7 +61,7 @@ RSpec.describe BarcodeValidation::GTIN::GTIN8 do
       let(:gtin12) { gtin.to_gtin_12 }
 
       before do
-        expect(gtin12.is_a?(BarcodeValidation::GTIN::GTIN12)).to be_truthy
+        expect(gtin12).to be_a(BarcodeValidation::GTIN::GTIN12)
       end
 
       it "returns a valid GTIN-12" do
@@ -73,7 +73,7 @@ RSpec.describe BarcodeValidation::GTIN::GTIN8 do
       let(:gtin13) { gtin.to_gtin_13 }
 
       before do
-        expect(gtin13.is_a?(BarcodeValidation::GTIN::GTIN13)).to be_truthy
+        expect(gtin13).to be_a(BarcodeValidation::GTIN::GTIN13)
       end
 
       it "returns a valid GTIN-13" do
@@ -85,7 +85,7 @@ RSpec.describe BarcodeValidation::GTIN::GTIN8 do
       let(:gtin14) { gtin.to_gtin_14 }
 
       before do
-        expect(gtin14.is_a?(BarcodeValidation::GTIN::GTIN14)).to be_truthy
+        expect(gtin14).to be_a(BarcodeValidation::GTIN::GTIN14)
       end
 
       it "returns a valid GTIN-14" do
@@ -96,7 +96,7 @@ RSpec.describe BarcodeValidation::GTIN::GTIN8 do
     context "to_all_valid" do
       let(:includes_gtin8) do
         gtin.to_all_valid.any? do |code|
-          code.is_a?(BarcodeValidation::GTIN::GTIN8)
+          code.is_a?(described_class)
         end
       end
 
@@ -105,15 +105,15 @@ RSpec.describe BarcodeValidation::GTIN::GTIN8 do
       end
 
       it "includes a GTIN-12 instance" do
-        expect(gtin.to_all_valid.any? { |code| code.is_a?(BarcodeValidation::GTIN::GTIN12) }).to be_truthy
+        expect(gtin.to_all_valid).to be_any { |code| code.is_a?(BarcodeValidation::GTIN::GTIN12) }
       end
 
       it "includes a GTIN-13 instance" do
-        expect(gtin.to_all_valid.any? { |code| code.is_a?(BarcodeValidation::GTIN::GTIN13) }).to be_truthy
+        expect(gtin.to_all_valid).to be_any { |code| code.is_a?(BarcodeValidation::GTIN::GTIN13) }
       end
 
       it "includes a GTIN-14 instance" do
-        expect(gtin.to_all_valid.any? { |code| code.is_a?(BarcodeValidation::GTIN::GTIN14) }).to be_truthy
+        expect(gtin.to_all_valid).to be_any { |code| code.is_a?(BarcodeValidation::GTIN::GTIN14) }
       end
     end
   end

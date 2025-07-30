@@ -4,6 +4,11 @@ services:
       dockerfile: '.buildkite/docker/Dockerfile'
       context: '../../'
     command: ["bin/rake"]
+  standardrb:
+    build:
+      dockerfile: '.buildkite/docker/Dockerfile'
+      context: '../../'
+    command: ["bin/standardrb"]
   commitlint:
     build:
       dockerfile: '.buildkite/docker/commitlint.Dockerfile'
