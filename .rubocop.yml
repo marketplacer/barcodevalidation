@@ -16,7 +16,8 @@ AllCops:
     - bin/rubocop
     - bin/setup
     - vendor/**/*
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.0
+  NewCops: disable
 
 # Single-quotes aren't quotes, they're apostrophes! D:
 Style/StringLiterals:
