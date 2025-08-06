@@ -31,6 +31,10 @@ module BarcodeValidation
       end
     end
 
+    def all_zeros?
+      all? { |digit| digit.to_i.zero? }
+    end
+
     def *(other)
       self.class.new(super)
     end
