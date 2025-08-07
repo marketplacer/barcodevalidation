@@ -52,7 +52,7 @@ module BarcodeValidation
       abstract_class
 
       def valid?
-        valid_length == length && check_digit.valid?
+        valid_length == length && !all_zeros? && check_digit.valid?
       end
 
       def valid_length
@@ -121,7 +121,7 @@ module BarcodeValidation
       # BarcodeValidation::InvalidGTIN with valid? = false and a meaningful
       # error message.
       def transcode_to(klass)
-        gtin = klass.new(format("%0#{klass::VALID_LENGTH}d", to_s.gsub(/^0+/, "")))
+        gtin = klass.new(format("%0#{klass::VALID_LENGTH}d", to_s.gsub(/^0+(?=.)/, "")))
 
         if gtin.valid?
           gtin
