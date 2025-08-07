@@ -18,7 +18,7 @@ module BarcodeValidation
       raise Digit::ArgumentError, input
     end
 
-    alias to_i __getobj__
+    alias_method :to_i, :__getobj__
 
     ArgumentError = Error::ArgumentErrorClass.new(self)
   end

@@ -15,7 +15,7 @@ module BarcodeValidation
       end
 
       def initialize(input)
-        super "invalid value for #{klass}(): #{input.inspect}"
+        super("invalid value for #{klass}(): #{input.inspect}")
       end
     end
   end

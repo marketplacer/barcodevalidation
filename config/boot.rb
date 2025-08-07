@@ -24,9 +24,9 @@ require "pathname"
 project_root = Pathname.new(__FILE__).parent.parent
 
 # Add lib directory to load path
-lib = project_root + "lib"
+lib = project_root / "lib"
 $LOAD_PATH.unshift(lib.to_s) unless $LOAD_PATH.include?(lib.to_s)
 
 # Tell Bundler explicitly which Gemfile to use
-ENV["BUNDLE_GEMFILE"] ||= (project_root + "Gemfile").to_s
+ENV["BUNDLE_GEMFILE"] ||= (project_root / "Gemfile").to_s
 require "bundler"

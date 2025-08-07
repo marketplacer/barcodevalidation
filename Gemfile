@@ -10,10 +10,11 @@ gem "pry", group: %i[console spec]
 
 group :rake do
   # Task runner
+  gem "benchmark", "~> 0.4"
   gem "rake", "~> 12"
 
   # Static analysis for Ruby
-  gem "rubocop", "~> 0.58", group: :rubocop
+  gem "standard", "~> 1.50", group: :standard
 
   group :spec do
     # Spec runner, DSL, matchers, and mocking framework all in one

@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 require File.expand_path("../config/boot.rb", __dir__)
-Bundler.setup(:rubocop)
-load Gem.bin_path("rubocop", "rubocop")
+Bundler.setup(:standard)
+load Gem.bin_path("standard", "standardrb")
